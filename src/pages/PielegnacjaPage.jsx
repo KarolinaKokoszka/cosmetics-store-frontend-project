@@ -1,9 +1,20 @@
+import ProductListPage from "../components/ProductListPage";
+
+const subcategories = [
+  { value: "twarz", label: "Twarz" },
+  { value: "wlosy", label: "Włosy" },
+  { value: "cialo", label: "Ciało" },
+];
+
 function PielegnacjaPage() {
   return (
-    <div>
-      <h1>Strona główna</h1>
-      <p>Tu będzie treść...</p>
-    </div>
+    <ProductListPage
+      category="pielegnacja"
+      title="Pielęgnacja"
+      description="Odkryj profesjonalne kosmetyki łączące luksusową pielęgnację z perfekcyjnym wykończeniem."
+      subcategories={subcategories}
+    />
   );
 }
+
 export default PielegnacjaPage;
