@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import MakijazPage from "./pages/MakijazPage";
+import PielegnacjaPage from "./pages/PielegnacjaPage";
+import PoradnikiPage from "./pages/PoradnikiPage";
+import KoszykPage from "./pages/KoszykPage";
+import UlubionePage from "./pages/UlubionePage";
+import KontaktPage from "./pages/KontaktPage";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        {/* Strony Z nawigacją i stopką */}
+        <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
+        <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
+        <Route path="/register" element={<MainLayout><RegisterPage /></MainLayout>} />
+        <Route path="/makijaz" element={<MainLayout><MakijazPage /></MainLayout>} />
+        <Route path="/pielegnacja" element={<MainLayout><PielegnacjaPage /></MainLayout>} />
+        <Route path="/poradniki" element={<MainLayout><PoradnikiPage /></MainLayout>} />
+        <Route path="/koszyk" element={<MainLayout><KoszykPage /></MainLayout>} />
+        <Route path="/ulubione" element={<MainLayout><UlubionePage /></MainLayout>} />
+        <Route path="/kontakt" element={<MainLayout><KontaktPage /></MainLayout>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
