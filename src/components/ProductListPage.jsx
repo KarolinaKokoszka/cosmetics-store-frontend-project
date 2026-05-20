@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./ProductListPage.css";
 import products from "../data/products";
@@ -6,17 +7,32 @@ import products from "../data/products";
 const ITEMS_PER_PAGE = 6;
 
 function ProductListPage({ category, title, description, subcategories }) {
-  const [selectedSub, setSelectedSub] = useState("wszystko");
-  const [priceMin, setPriceMin] = useState("");
-  const [priceMax, setPriceMax] = useState("");
-  const [sort, setSort] = useState("domyslnie");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // odczytaj ?sub= z URL przy pierwszym renderze i przy zmianie URL
+  const subFromUrl = searchParams.get("sub") || "wszystko";
+
+  const [selectedSub, setSelectedSub] = useState(subFromUrl);
+  const [priceMin, setPriceMin]       = useState("");
+  const [priceMax, setPriceMax]       = useState("");
+  const [sort, setSort]               = useState("domyslnie");
   const [appliedFilters, setAppliedFilters] = useState({
-    sub: "wszystko",
+    sub: subFromUrl,
     min: "",
     max: "",
     sort: "domyslnie",
   });
   const [currentPage, setCurrentPage] = useState(1);
+
+  // gdy zmieni się ?sub= w URL (np. po kliknięciu w megamenu),
+  // zaktualizuj stan filtrów automatycznie
+  useEffect(() => {
+    const sub = searchParams.get("sub") || "wszystko";
+    setSelectedSub(sub);
+    setAppliedFilters((prev) => ({ ...prev, sub }));
+    setCurrentPage(1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [searchParams]);
 
   function changePage(page) {
     setCurrentPage(page);
@@ -51,17 +67,29 @@ function ProductListPage({ category, title, description, subcategories }) {
   );
 
   function applyFilters() {
+    // aktualizuj URL query param żeby sub było widoczne w pasku
+    if (selectedSub !== "wszystko") {
+      setSearchParams({ sub: selectedSub });
+    } else {
+      setSearchParams({});
+    }
     setAppliedFilters({ sub: selectedSub, min: priceMin, max: priceMax, sort });
     changePage(1);
   }
 
   function clearFilters() {
+    setSearchParams({});
     setSelectedSub("wszystko");
     setPriceMin("");
     setPriceMax("");
     setSort("domyslnie");
     setAppliedFilters({ sub: "wszystko", min: "", max: "", sort: "domyslnie" });
     changePage(1);
+  }
+
+  // zmiana subkategorii przez checkbox też aktualizuje URL od razu
+  function handleSubChange(value) {
+    setSelectedSub(value);
   }
 
   return (
@@ -84,7 +112,7 @@ function ProductListPage({ category, title, description, subcategories }) {
               <input
                 type="checkbox"
                 checked={selectedSub === "wszystko"}
-                onChange={() => setSelectedSub("wszystko")}
+                onChange={() => handleSubChange("wszystko")}
               />
               <span>Wszystko</span>
             </label>
@@ -93,7 +121,7 @@ function ProductListPage({ category, title, description, subcategories }) {
                 <input
                   type="checkbox"
                   checked={selectedSub === sub.value}
-                  onChange={() => setSelectedSub(sub.value)}
+                  onChange={() => handleSubChange(sub.value)}
                 />
                 <span>{sub.label}</span>
               </label>

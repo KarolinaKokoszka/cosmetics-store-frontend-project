@@ -9,6 +9,12 @@ import PoradnikiPage from "./pages/PoradnikiPage";
 import KoszykPage from "./pages/KoszykPage";
 import UlubionePage from "./pages/UlubionePage";
 import KontaktPage from "./pages/KontaktPage";
+import DostawaPage             from "./pages/DostawaPage";
+import ZwrotyPage              from "./pages/ZwrotyPage";
+import ONasPage                from "./pages/ONasPage";
+import PolitykaPrywatnosciPage from "./pages/PolitykaPrywatnosciPage";
+import RegulaminPage           from "./pages/RegulaminPage";
+
 
 
 function App() {
@@ -26,6 +32,11 @@ function App() {
         <Route path="/koszyk" element={<MainLayout><KoszykPage /></MainLayout>} />
         <Route path="/ulubione" element={<MainLayout><UlubionePage /></MainLayout>} />
         <Route path="/kontakt" element={<MainLayout><KontaktPage /></MainLayout>} />
+        <Route path="/dostawa"  element={<DostawaPage />} />
+        <Route path="/zwroty"   element={<ZwrotyPage />} />
+        <Route path="/o-nas"    element={<ONasPage />} />
+        <Route path="/polityka" element={<PolitykaPrywatnosciPage />} />
+        <Route path="/regulamin" element={<RegulaminPage />} />
       </Routes>
     </BrowserRouter>
   );
