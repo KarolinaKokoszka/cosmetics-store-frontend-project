@@ -4,23 +4,29 @@ import "./ProductCard.css";
 function ProductCard({ product }) {
   return (
     <div className="product-card">
-      <div className="product-card__image-wrapper">
-        <img
-          src={product.images?.[0] || "/images/placeholder.jpg"}
-          alt={product.name}
-          className="product-card__image"
-        />
+      <Link to={`/produkt/${product.id}`} className="product-card__image-link">
+        <div className="product-card__image-wrapper">
+          <img
+            src={product.images?.[0] || "/images/placeholder.jpg"}
+            alt={product.name}
+            className="product-card__image"
+          />
 
-        {product.badge && (
-          <span className={`product-card__badge product-card__badge--${product.badge === "BESTSELLER" ? "bestseller" : "promo"}`}>
-            {product.badge}
-          </span>
-        )}
+          {product.badge && (
+            <span className={`product-card__badge product-card__badge--${product.badge === "BESTSELLER" ? "bestseller" : "promo"}`}>
+              {product.badge}
+            </span>
+          )}
 
-        <button className="product-card__wishlist" aria-label="Dodaj do ulubionych">
-          ♡
-        </button>
-      </div>
+          <button
+            className="product-card__wishlist"
+            aria-label="Dodaj do ulubionych"
+            onClick={(e) => e.preventDefault()}
+          >
+            ♡
+          </button>
+        </div>
+      </Link>
 
       <div className="product-card__info">
         <div className="product-card__top">

@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500&family=Manrope:wght@400;700&display=swap');
+
+.pdp {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 60px 0 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+.pdp__not-found {
+  text-align: center;
+  padding: 120px 0;
+}
+
+/* Breadcrumbs */
+.pdp__breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.pdp__breadcrumb-link {
+  color: #797586;
+  text-decoration: none;
+}
+
+.pdp__breadcrumb-link:hover { color: #7B5CF0; }
+
+.pdp__breadcrumb-sep { color: #797586; }
+
+.pdp__breadcrumb-current { color: #191C1E; }
+
+/* Hero */
+.pdp__hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: flex-start;
+}
+
+/* Galeria */
+.pdp__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pdp__gallery-main {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+
+.pdp__gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pdp__gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.pdp__thumb {
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  aspect-ratio: 1;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+  transition: border-color 0.2s;
+}
+
+.pdp__thumb--active { border-color: #7B5CF0; }
+
+.pdp__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Info */
+.pdp__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pdp__badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pdp__badge--bestseller {
+  border: 1px solid #E6DEFF;
+  color: #6240D5;
+}
+
+.pdp__badge--promo {
+  background: #BA1A1A;
+  color: #fff;
+}
+
+.pdp__name {
+  font-family: 'Noto Serif', serif;
+  font-size: 48px;
+  line-height: 58px;
+  font-weight: 400;
+  color: #191C1E;
+  margin: 0 0 8px 0;
+}
+
+.pdp__rating-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pdp__rating-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  color: #797586;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: var(--star-size, 19px);
+  color: #E2E8F0;
+  line-height: 1;
+}
+
+.star--filled { color: #7B5700; }
+
+.pdp__price {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  line-height: 42px;
+  color: #191C1E;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pdp__price-old {
+  font-size: 18px;
+  color: #94A3B8;
+  text-decoration: line-through;
+}
+
+.pdp__price-sale { color: #BA1A1A; }
+
+.pdp__description {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  line-height: 29px;
+  color: #484554;
+  margin: 0 0 40px 0;
+}
+
+/* Składniki */
+.pdp__ingredients { margin-bottom: 40px; }
+
+.pdp__ingredients-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #191C1E;
+  margin: 0 0 16px 0;
+}
+
+.pdp__ingredients-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pdp__ingredient-tag {
+  background: #8CF0EC;
+  color: #006E6C;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+}
+
+/* Przyciski */
+.pdp__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.pdp__btn-cart {
+  width: 100%;
+  padding: 20px 0;
+  background: linear-gradient(90deg, #7B5CF0 0%, #6240D5 100%);
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.pdp__btn-cart:hover { opacity: 0.9; }
+
+.pdp__btn-wishlist {
+  width: 100%;
+  padding: 20px 0;
+  background: transparent;
+  border: 1px solid #CAC4D7;
+  border-radius: 9999px;
+  color: #191C1E;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+
+.pdp__btn-wishlist:hover { border-color: #7B5CF0; }
+
+/* Accordion */
+.pdp__accordions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.accordion {
+  border-bottom: 1px solid #CAC4D7;
+  padding-bottom: 16px;
+}
+
+.accordion__header {
+  width: 100%;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.accordion__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #191C1E;
+}
+
+.accordion__chevron {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.accordion--open .accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.accordion__body {
+  margin-top: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #484554;
+}
+
+/* Opinie */
+.pdp__reviews { display: flex; flex-direction: column; gap: 48px; }
+
+.pdp__reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.pdp__reviews-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: #191C1E;
+  margin: 0 0 8px 0;
+}
+
+.pdp__reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pdp__reviews-avg {
+  font-family: 'Noto Serif', serif;
+  font-size: 36px;
+  color: #191C1E;
+}
+
+
+.pdp__reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pdp__review-card {
+  background: #fff;
+  border: 1px solid #F8FAFC;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pdp__review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pdp__review-author {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #191C1E;
+  margin: 0 0 4px 0;
+}
+
+.pdp__review-date {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: #797586;
+  margin: 0;
+}
+
+.pdp__review-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #484554;
+  margin: 0;
+}
+
+/* Może Cię zainteresować */
+.pdp__related { display: flex; flex-direction: column; gap: 48px; }
+
+.pdp__related-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: #191C1E;
+  margin: 0;
+}
+
+.pdp__related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.pdp__related-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pdp__related-img-wrap {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  margin-bottom: 12px;
+}
+
+.pdp__related-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.pdp__related-card:hover .pdp__related-img { transform: scale(1.04); }
+
+.pdp__related-name {
+  font-family: 'Noto Serif', serif;
+  font-size: 16px;
+  color: #191C1E;
+  margin: 0;
+}
+
+.pdp__related-sub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #797586;
+  margin: 0;
+}
+
+.pdp__related-price {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #191C1E;
+  margin: 4px 0 0 0;
+}
+
+/* Responsywność */
+@media (max-width: 1024px) {
+  .pdp { padding: 40px 24px 80px; }
+  .pdp__hero { grid-template-columns: 1fr; gap: 40px; }
+  .pdp__related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .pdp__name { font-size: 32px; line-height: 42px; }
+  .pdp__reviews-grid { grid-template-columns: 1fr; }
+  .pdp__related-grid { grid-template-columns: repeat(2, 1fr); }
+  .pdp__reviews-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .pdp__related-grid { grid-template-columns: 1fr; }
+}

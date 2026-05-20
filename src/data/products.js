@@ -19,7 +19,7 @@ const products = [
     usage: "Nałóż niewielką ilość podkładu na oczyszczoną skórę przy pomocy pędzla lub gąbeczki. Rozprowadź okrężnymi ruchami od środka twarzy na zewnątrz.",
     ingredients: ["SPF 20", "Ekstrakt z jedwabiu", "Witamina E", "Kwas Hialuronowy"],
     inci: "Aqua, Cyclopentasiloxane, Titanium Dioxide, Silk Extract, Tocopheryl Acetate, Sodium Hyaluronate",
-    images: ["/images/makeup/foundation-1.jpg", "/images/makeup/foundation-2.jpg", "/images/makeup/foundation-3.jpg"]
+    images: ["/images/makeup/foundation-1.jpg", "/images/makeup/foundation-2.jpg"]
   },
   {
     id: 2,
@@ -125,7 +125,7 @@ const products = [
     badge: null,
     rating: 4.4,
     reviewCount: 88,
-    description: "10 intensywnych odcieni od grafitowego szarego po głęboki granat i czerń. Stworzona do dramatycznych, wieczorowych stylizacji. Formuła o wysokiej pigmentacji — trwa przez całą noc.",
+    description: "12 intensywnych odcieni od grafitowego szarego po głęboki granat i czerń. Stworzona do dramatycznych, wieczorowych stylizacji. Formuła o wysokiej pigmentacji — trwa przez całą noc.",
     usage: "Nanieś bazę pod cienie dla lepszej trwałości. Ciemny odcień aplikuj mokrym pędzelkiem dla intensywniejszego efektu. Rozetrzyj granice pędzelkiem do blendowania.",
     ingredients: ["Witamina E", "Mika", "Olej jojoba"],
     inci: "Mica, Talc, Simmondsia Chinensis Oil, Tocopheryl Acetate, Iron Oxides",

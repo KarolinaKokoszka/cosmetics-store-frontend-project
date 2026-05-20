@@ -14,7 +14,7 @@ import ZwrotyPage              from "./pages/ZwrotyPage";
 import ONasPage                from "./pages/ONasPage";
 import PolitykaPrywatnosciPage from "./pages/PolitykaPrywatnosciPage";
 import RegulaminPage           from "./pages/RegulaminPage";
-
+import ProductPage from "./pages/ProductPage";
 
 
 function App() {
@@ -37,6 +37,8 @@ function App() {
         <Route path="/o-nas"    element={<ONasPage />} />
         <Route path="/polityka" element={<PolitykaPrywatnosciPage />} />
         <Route path="/regulamin" element={<RegulaminPage />} />
+        <Route path="/produkt/:id" element={<MainLayout><ProductPage /></MainLayout>} />
+
       </Routes>
     </BrowserRouter>
   );
