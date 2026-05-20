@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./ProductListPage.css";
@@ -6,33 +6,33 @@ import products from "../data/products";
 
 const ITEMS_PER_PAGE = 6;
 
-function ProductListPage({ category, title, description, subcategories }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+function ProductListPage({ category, title, description, subcategories, rutyny = [] }) {
+  const [searchParams] = useSearchParams();
 
-  // odczytaj ?sub= z URL przy pierwszym renderze i przy zmianie URL
-  const subFromUrl = searchParams.get("sub") || "wszystko";
+  // odczytaj z URL czy to sub czy rutyna
+  const urlSub = searchParams.get("sub") || "wszystko";
+  const urlRutyna = searchParams.get("rutyna") || "wszystko";
+  const subValues = subcategories.map((s) => s.value);
+  const rutynaValues = rutyny.map((r) => r.value);
 
-  const [selectedSub, setSelectedSub] = useState(subFromUrl);
-  const [priceMin, setPriceMin]       = useState("");
-  const [priceMax, setPriceMax]       = useState("");
-  const [sort, setSort]               = useState("domyslnie");
+  const initSub    = subValues.includes(urlSub)    ? urlSub    : "wszystko";
+  const initRutyna = rutynaValues.includes(urlRutyna) ? urlRutyna    : "wszystko";
+
+  const [selectedSub,    setSelectedSub]    = useState(initSub);
+  const [selectedRutyna, setSelectedRutyna] = useState(initRutyna);
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+  const [sort, setSort]         = useState("domyslnie");
+
   const [appliedFilters, setAppliedFilters] = useState({
-    sub: subFromUrl,
-    min: "",
-    max: "",
-    sort: "domyslnie",
+    sub:    initSub,
+    rutyna: initRutyna,
+    min:    "",
+    max:    "",
+    sort:   "domyslnie",
   });
-  const [currentPage, setCurrentPage] = useState(1);
 
-  // gdy zmieni się ?sub= w URL (np. po kliknięciu w megamenu),
-  // zaktualizuj stan filtrów automatycznie
-  useEffect(() => {
-    const sub = searchParams.get("sub") || "wszystko";
-    setSelectedSub(sub);
-    setAppliedFilters((prev) => ({ ...prev, sub }));
-    setCurrentPage(1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [searchParams]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   function changePage(page) {
     setCurrentPage(page);
@@ -41,15 +41,24 @@ function ProductListPage({ category, title, description, subcategories }) {
 
   const filtered = useMemo(() => {
     let result = products.filter((p) => p.category === category);
+
     if (appliedFilters.sub !== "wszystko") {
       result = result.filter((p) => p.subcategory === appliedFilters.sub);
     }
+
+    if (appliedFilters.rutyna !== "wszystko") {
+      result = result.filter(
+        (p) => Array.isArray(p.rutyna) && p.rutyna.includes(appliedFilters.rutyna)
+      );
+    }
+
     if (appliedFilters.min !== "") {
       result = result.filter((p) => p.price >= Number(appliedFilters.min));
     }
     if (appliedFilters.max !== "") {
       result = result.filter((p) => p.price <= Number(appliedFilters.max));
     }
+
     if (appliedFilters.sort === "cena-asc") {
       result = [...result].sort((a, b) => a.price - b.price);
     } else if (appliedFilters.sort === "cena-desc") {
@@ -57,39 +66,40 @@ function ProductListPage({ category, title, description, subcategories }) {
     } else if (appliedFilters.sort === "ocena") {
       result = [...result].sort((a, b) => b.rating - a.rating);
     }
+
     return result;
   }, [category, appliedFilters]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const paginated = filtered.slice(
+  const paginated  = filtered.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
   function applyFilters() {
-    // aktualizuj URL query param żeby sub było widoczne w pasku
-    if (selectedSub !== "wszystko") {
-      setSearchParams({ sub: selectedSub });
-    } else {
-      setSearchParams({});
-    }
-    setAppliedFilters({ sub: selectedSub, min: priceMin, max: priceMax, sort });
+    setAppliedFilters({ sub: selectedSub, rutyna: selectedRutyna, min: priceMin, max: priceMax, sort });
     changePage(1);
   }
 
   function clearFilters() {
-    setSearchParams({});
     setSelectedSub("wszystko");
+    setSelectedRutyna("wszystko");
     setPriceMin("");
     setPriceMax("");
     setSort("domyslnie");
-    setAppliedFilters({ sub: "wszystko", min: "", max: "", sort: "domyslnie" });
+    setAppliedFilters({ sub: "wszystko", rutyna: "wszystko", min: "", max: "", sort: "domyslnie" });
     changePage(1);
   }
 
-  // zmiana subkategorii przez checkbox też aktualizuje URL od razu
+  // gdy wybierasz sub, resetuj rutynę i odwrotnie
   function handleSubChange(value) {
     setSelectedSub(value);
+    setSelectedRutyna("wszystko");
+  }
+
+  function handleRutynaChange(value) {
+    setSelectedRutyna(value);
+    setSelectedSub("wszystko");
   }
 
   return (
@@ -106,13 +116,14 @@ function ProductListPage({ category, title, description, subcategories }) {
         <aside className="plp__filters">
           <h2 className="plp__filters-title">Filtry</h2>
 
+          {/* Subkategorie */}
           <div className="plp__filter-group">
             <p className="plp__filter-label">KATEGORIA</p>
             <label className="plp__filter-check">
               <input
                 type="checkbox"
-                checked={selectedSub === "wszystko"}
-                onChange={() => handleSubChange("wszystko")}
+                checked={selectedSub === "wszystko" && selectedRutyna === "wszystko"}
+                onChange={() => { setSelectedSub("wszystko"); setSelectedRutyna("wszystko"); }}
               />
               <span>Wszystko</span>
             </label>
@@ -128,6 +139,24 @@ function ProductListPage({ category, title, description, subcategories }) {
             ))}
           </div>
 
+          {/* Rutyna — tylko gdy przekazano rutyny (pielęgnacja) */}
+          {rutyny.length > 0 && (
+            <div className="plp__filter-group">
+              <p className="plp__filter-label">RUTYNA</p>
+              {rutyny.map((r) => (
+                <label key={r.value} className="plp__filter-check">
+                  <input
+                    type="checkbox"
+                    checked={selectedRutyna === r.value}
+                    onChange={() => handleRutynaChange(r.value)}
+                  />
+                  <span>{r.label}</span>
+                </label>
+              ))}
+            </div>
+          )}
+
+          {/* Cena */}
           <div className="plp__filter-group">
             <p className="plp__filter-label">CENA (PLN)</p>
             <div className="plp__price-inputs">
@@ -149,6 +178,7 @@ function ProductListPage({ category, title, description, subcategories }) {
             </div>
           </div>
 
+          {/* Sortowanie */}
           <div className="plp__filter-group">
             <p className="plp__filter-label">SORTUJ</p>
             <select
@@ -164,12 +194,8 @@ function ProductListPage({ category, title, description, subcategories }) {
           </div>
 
           <div className="plp__filter-actions">
-            <button onClick={applyFilters} className="plp__btn-apply">
-              Zastosuj filtry
-            </button>
-            <button onClick={clearFilters} className="plp__btn-clear">
-              Usuń filtry
-            </button>
+            <button onClick={applyFilters} className="plp__btn-apply">Zastosuj filtry</button>
+            <button onClick={clearFilters} className="plp__btn-clear">Usuń filtry</button>
           </div>
         </aside>
 
@@ -190,9 +216,7 @@ function ProductListPage({ category, title, description, subcategories }) {
                 className="plp__page-btn"
                 onClick={() => changePage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-              >
-                ‹
-              </button>
+              >‹</button>
 
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
@@ -208,9 +232,7 @@ function ProductListPage({ category, title, description, subcategories }) {
                 className="plp__page-btn"
                 onClick={() => changePage(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-              >
-                ›
-              </button>
+              >›</button>
             </div>
           )}
         </div>

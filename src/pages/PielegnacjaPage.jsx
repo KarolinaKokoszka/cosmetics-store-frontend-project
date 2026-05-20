@@ -6,6 +6,13 @@ const subcategories = [
   { value: "cialo", label: "Ciało" },
 ];
 
+const rutyny = [
+  { value: "oczyszczanie", label: "Oczyszczanie" },
+  { value: "tonizacja",    label: "Tonizacja"    },
+  { value: "serum",        label: "Serum"        },
+  { value: "krem",         label: "Krem"         },
+];
+
 function PielegnacjaPage() {
   return (
     <ProductListPage
@@ -13,6 +20,7 @@ function PielegnacjaPage() {
       title="Pielęgnacja"
       description="Odkryj profesjonalne kosmetyki łączące luksusową pielęgnację z perfekcyjnym wykończeniem."
       subcategories={subcategories}
+      rutyny={rutyny}
     />
   );
 }
