@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import MakijazPage from "./pages/MakijazPage";
 import PielegnacjaPage from "./pages/PielegnacjaPage";
 import PoradnikiPage from "./pages/PoradnikiPage";
+import ArticlePage from "./components/ArticlePage";
 import KoszykPage from "./pages/KoszykPage";
 import UlubionePage from "./pages/UlubionePage";
 import KontaktPage from "./pages/KontaktPage";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/makijaz" element={<MainLayout><MakijazPage /></MainLayout>} />
         <Route path="/pielegnacja" element={<MainLayout><PielegnacjaPage /></MainLayout>} />
         <Route path="/poradniki" element={<MainLayout><PoradnikiPage /></MainLayout>} />
+        <Route path="/poradniki/:slug" element={<MainLayout><ArticlePage /></MainLayout>} />
         <Route path="/koszyk" element={<MainLayout><KoszykPage /></MainLayout>} />
         <Route path="/ulubione" element={<MainLayout><UlubionePage /></MainLayout>} />
         <Route path="/kontakt" element={<MainLayout><KontaktPage /></MainLayout>} />

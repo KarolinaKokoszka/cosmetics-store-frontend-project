@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@400;500;700&display=swap');
+
+.poradniki {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 120px;
+}
+
+.poradniki__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ── NAGŁÓWEK ── */
+.poradniki__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.poradniki__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: #0F172A;
+  margin: 0;
+}
+
+.poradniki__subtitle {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  color: #94A3B8;
+  margin: 8px 0 0;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* ── DROPDOWN ── */
+.poradniki__filter-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.poradniki__filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #7B5CF0;
+  background: rgba(123, 92, 240, 0.08);
+  border: 1.5px solid rgba(123, 92, 240, 0.3);
+  border-radius: 40px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.poradniki__filter-btn:hover {
+  background: rgba(123, 92, 240, 0.14);
+  border-color: rgba(123, 92, 240, 0.6);
+}
+
+.poradniki__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.1);
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  min-width: 200px;
+  z-index: 50;
+  animation: dropdown-in 0.15s ease;
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.poradniki__dropdown-item {
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9rem;
+  color: #0F172A;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.poradniki__dropdown-item:hover {
+  background: #F5F3FF;
+  color: #7B5CF0;
+}
+
+.poradniki__dropdown-item--active {
+  color: #7B5CF0;
+  font-weight: 700;
+  background: #F5F3FF;
+}
+
+/* ── LISTA ARTYKUŁÓW ── */
+.poradniki__list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.poradniki__empty {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  color: #94A3B8;
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* ── KARTA ARTYKUŁU ── */
+.article-card {
+  display: grid;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 400px;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.article-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+/* zdjęcie po lewej */
+.article-card--image-left {
+  grid-template-columns: 5fr 6fr;
+}
+
+/* zdjęcie po prawej */
+.article-card--image-right {
+  grid-template-columns: 6fr 5fr;
+  direction: rtl;
+}
+
+.article-card--image-right > * {
+  direction: ltr;
+}
+
+/* ── ZDJĘCIE ── */
+.article-card__img-wrap {
+  overflow: hidden;
+}
+
+.article-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.article-card:hover .article-card__img {
+  transform: scale(1.04);
+}
+
+/* ── TREŚĆ ── */
+.article-card__body {
+  padding: 48px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.article-card__cat {
+  display: inline-block;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #7B5CF0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+.article-card__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.article-card__excerpt {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.article-card__link {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #7B5CF0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+  align-self: flex-start;
+}
+
+.article-card__link:hover {
+  gap: 10px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .article-card--image-left,
+  .article-card--image-right {
+    grid-template-columns: 1fr;
+    grid-template-rows: 220px 1fr;
+    direction: ltr;
+    height: auto;
+  }
+
+  .article-card__img-wrap {
+    height: 100%;
+  }
+
+  .article-card__body {
+    padding: 28px 24px 32px;
+  }
+
+  .article-card__title {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .poradniki {
+    padding: 40px 16px 80px;
+  }
+
+  .poradniki__title {
+    font-size: 2rem;
+  }
+
+  .poradniki__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .poradniki__filter-wrap {
+    align-self: flex-start;
+  }
+
+  .poradniki__dropdown {
+    right: auto;
+    left: 0;
+  }
+
+  .article-card--image-left,
+  .article-card--image-right {
+    grid-template-rows: 180px 1fr;
+  }
+
+  .article-card__body {
+    padding: 20px 18px 24px;
+    gap: 12px;
+  }
+
+  .article-card__title {
+    font-size: 1.15rem;
+  }
+
+  .article-card__excerpt {
+    font-size: 0.82rem;
+  }
+
+  .poradniki__list {
+    gap: 28px;
+  }
+}

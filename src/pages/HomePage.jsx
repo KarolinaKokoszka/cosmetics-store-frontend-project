@@ -1,17 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import "./HomePage.css";
 
+/* ===========================
+   HERO SLIDER
+   =========================== */
 function HeroSlider() {
   const [current, setCurrent] = useState(0);
+  const TOTAL = 3;
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % 3);
+      setCurrent((prev) => (prev + 1) % TOTAL);
     }, 7000);
     return () => clearInterval(timer);
   }, []);
+
+  function prev() { setCurrent((c) => (c - 1 + TOTAL) % TOTAL); }
+  function next() { setCurrent((c) => (c + 1) % TOTAL); }
 
   return (
     <div className="slider">
@@ -20,7 +27,7 @@ function HeroSlider() {
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
 
-        {/* SLAJD 0 */}
+        {/* SLAJD 1 — hero z tekstem */}
         <div className="slider__slide">
           <div className="hero">
             <div className="hero__content">
@@ -40,7 +47,7 @@ function HeroSlider() {
             <div className="hero__image-wrap">
               <div className="hero__rect" />
               <img
-                src="/images/skincare/hero.jpg"
+                src="/images/header/banner1.png"
                 alt="Glowi hero"
                 className="hero__image"
               />
@@ -48,29 +55,74 @@ function HeroSlider() {
           </div>
         </div>
 
-        {/* SLAJD 1 */}
+        {/* SLAJD 2 — kolaż z przekrzywionymi zdjęciami */}
         <div className="slider__slide">
-          <img
-            src="/images/header/banner1.png"
-            alt="Glow Up Guide"
-            className="slider__banner-img"
-          />
+          <div className="banner2">
+
+            {/* LEWA — zdjęcie kobiety z różowym prostokątem */}
+            <div className="banner2__photo-wrap banner2__photo-wrap--left">
+              <div className="banner2__rect banner2__rect--pink" />
+              <img src="/images/header/kobieta.png" alt="Glowi" className="banner2__photo banner2__photo--left" />
+            </div>
+
+            {/* ŚRODEK */}
+            <div className="banner2__center">
+              <h2 className="banner2__title">
+                glow up<br />
+                <span className="banner2__title-highlight">guide</span>
+              </h2>
+              <p className="banner2__sub">
+                your skin, your rules<br />
+                <strong>discover the glow within</strong>
+              </p>
+              <Link to="/poradniki/nawilzanie-skory" className="btn btn--primary">
+                Czytaj więcej
+              </Link>
+            </div>
+
+            {/* PRAWA — zdjęcie serum z miętowym prostokątem */}
+            <div className="banner2__photo-wrap banner2__photo-wrap--right">
+              <div className="banner2__rect banner2__rect--mint" />
+              <img src="/images/header/serum.png" alt="Serum Glowi" className="banner2__photo banner2__photo--right" />
+            </div>
+
+          </div>
         </div>
 
-        {/* SLAJD 2*/}
+        {/* SLAJD 3 — Makeup Collection */}
         <div className="slider__slide">
-          <img
-            src="/images/header/banner2.png"
-            alt="Glowi banner 2"
-            className="slider__banner-img"
-          />
+          <div className="banner3">
+            <h2 className="banner3__title">
+              Makeup <span>Collection</span>
+            </h2>
+            <div className="banner3__photos">
+              <img src="/images/makeup/gloss-1.jpg"      alt="Gloss"     className="banner3__photo" />
+              <img src="/images/header/twarz.png"         alt="Makijaż"   className="banner3__photo" />
+              <img src="/images/makeup/eyeshadow2-1.jpg" alt="Eyeshadow" className="banner3__photo" />
+            </div>
+            <Link to="/makijaz" className="btn btn--primary">
+              SPRAWDŹ
+            </Link>
+          </div>
         </div>
 
       </div>
 
-      {/* KROPKI NAWIGACJI */}
+      {/* STRZAŁKI */}
+      <button className="slider__arrow slider__arrow--left" onClick={prev} aria-label="Poprzedni slajd">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button className="slider__arrow slider__arrow--right" onClick={next} aria-label="Następny slajd">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+      {/* KROPKI */}
       <div className="slider__dots">
-        {[0, 1, 2].map((i) => (
+        {Array.from({ length: TOTAL }, (_, i) => (
           <button
             key={i}
             className={`slider__dot ${current === i ? "slider__dot--active" : ""}`}
@@ -85,88 +137,67 @@ function HeroSlider() {
 }
 
 
-/* nowości */
+/* ── dane: Nowości ── */
 const newProducts = [
   {
-    id: 1,
+    id: 12,
     name: "Hydra Glow Serum",
     shortDesc: "Intensywne nawilżenie 24h",
-    price: 189,
-    oldPrice: 240,
-    images: ["/images/skincare/serum.jpg"],
+    price: 149,
+    oldPrice: null,
+    images: ["/images/skincare/hydra-serum-1.jpg"],
     badge: "BESTSELLER",
-    rating: 4.8,
+    rating: 4.2,
     reviewCount: 124,
     category: "pielegnacja",
-    slug: "/produkt/1",
-  },
-  {
-    id: 2,
-    name: "Maska Detoksykująca",
-    shortDesc: "Głębokie oczyszczenie porów",
-    price: 149,
-    images: ["/images/skincare/maska.jpg"],
-    rating: 4.5,
-    reviewCount: 87,
-    category: "pielegnacja",
-    slug: "/produkt/2",
-  },
-  {
-    id: 3,
-    name: "Krem pod oczy",
-    shortDesc: "Redukuje cienie i opuchliznę",
-    price: 199,
-    images: ["/images/skincare/krem.jpg"],
-    rating: 4.7,
-    reviewCount: 63,
-    category: "pielegnacja",
-    slug: "/produkt/3",
+    slug: "/produkt/12",
   },
 ];
 
-/* Wyjątkowe Oferty*/
+/* ── dane: Wyjątkowe Oferty ── */
 const promoProducts = [
   {
-    id: 4,
+    id: 18,
     name: "Zestaw Poranny Blask",
     shortDesc: "Kompletna poranna rutyna",
     price: 349,
-    oldPrice: 480,
+    oldPrice: 439,
     images: ["/images/skincare/morning-set-1.jpg"],
-    rating: 4.9,
-    reviewCount: 201,
+    badge: "PROMOCJA",
+    rating: 3.5,
+    reviewCount: 52,
     category: "pielegnacja",
-    slug: "/produkt/4",
+    slug: "/produkt/18",
   },
   {
-    id: 5,
+    id: 19,
     name: "Duet Ochronny SPF",
     shortDesc: "Ochrona i nawilżenie w jednym",
     price: 189,
-    oldPrice: 260,
+    oldPrice: 220,
     images: ["/images/skincare/spf-set-1.jpg"],
     badge: "PROMOCJA",
-    rating: 4.6,
-    reviewCount: 95,
+    rating: 4.0,
+    reviewCount: 124,
     category: "pielegnacja",
-    slug: "/produkt/5",
+    slug: "/produkt/19",
   },
   {
-    id: 6,
+    id: 20,
     name: "Nocna Regeneracja + Maska",
     shortDesc: "Intensywna kuracja na noc",
     price: 189,
-    oldPrice: 280,
+    oldPrice: 220,
     images: ["/images/skincare/night-cream-1.jpg"],
     badge: "PROMOCJA",
-    rating: 4.8,
-    reviewCount: 148,
+    rating: 4.4,
+    reviewCount: 124,
     category: "pielegnacja",
-    slug: "/produkt/6",
+    slug: "/produkt/20",
   },
 ];
 
-/*dane: Blog*/
+/* ── dane: Blog ── */
 const blogPosts = [
   {
     id: 1,
@@ -189,6 +220,15 @@ const blogPosts = [
 ];
 
 function HomePage() {
+  const [email, setEmail] = React.useState("");
+  const [subscribed, setSubscribed] = React.useState(false);
+
+  function handleNewsletter(e) {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+    setSubscribed(true);
+    setEmail("");
+  }
   return (
     <main className="homepage">
 
@@ -208,7 +248,8 @@ function HomePage() {
 
           <div className="nowosci__grid">
 
-            <Link to={newProducts[0].slug} className="nowosci__main-card">
+            {/* LEWA — duża karta Hydra Glow Serum */}
+            <Link to="/produkt/12" className="nowosci__main-card">
               <div className="nowosci__main-img-wrap">
                 <img src="/images/skincare/hydra-serum-1.jpg" alt="Hydra Glow Serum" className="nowosci__main-img" />
                 <span className="nowosci__badge">BESTSELLER</span>
@@ -219,22 +260,25 @@ function HomePage() {
               </div>
             </Link>
 
+            {/* PRAWA GÓRA — fioletowy kafelek + zdjęcie olejku */}
             <div className="nowosci__feature">
               <div className="nowosci__promo-card">
                 <h3 className="nowosci__promo-title">Rewolucja w demakijażu</h3>
                 <p className="nowosci__promo-text">
                   Poznaj naszą nową linię olejków myjących z ekstraktem z różowej piwonii.
                 </p>
-                <Link to="/pielegnacja" className="nowosci__promo-link">ODKRYJ TERAZ</Link>
+                <Link to="/produkt/13" className="nowosci__promo-link">ODKRYJ TERAZ</Link>
               </div>
-              <Link to="/produkt/25" className="nowosci__photo-card">
+              <Link to="/produkt/13" className="nowosci__photo-card">
                 <img src="/images/skincare/peony-oil-1.jpg" alt="Olejek piwoniowy" className="nowosci__photo-img" />
               </Link>
             </div>
 
+            {/* DÓŁ — Lip Sleeping Mask i Golden Glow Elixir */}
             <div className="nowosci__bottom-row">
 
               <Link to="/produkt/25" className="nowosci__simple-card nowosci__simple-card--gray">
+                <img src="/images/skincare/lip-mask-1.jpg" alt="Lip Sleeping Mask" className="nowosci__simple-bg" />
                 <div className="nowosci__simple-info">
                   <p className="nowosci__simple-label">Maska na noc na usta</p>
                   <h3 className="nowosci__simple-name">Lip Sleeping Mask</h3>
@@ -243,8 +287,8 @@ function HomePage() {
               </Link>
 
               <Link to="/produkt/16" className="nowosci__simple-card nowosci__simple-card--yellow">
+                <img src="/images/skincare/golden-oil-1.jpg" alt="Golden Glow Elixir" className="nowosci__simple-bg" />
                 <div className="nowosci__simple-info">
-                  <div className="nowosci__simple-stars">★★★★★ <span>(98)</span></div>
                   <h3 className="nowosci__simple-name">Golden Glow Elixir</h3>
                   <p className="nowosci__simple-label">Olejek do czyszczenia twarzy</p>
                   <p className="nowosci__simple-price">89 PLN</p>
@@ -302,19 +346,28 @@ function HomePage() {
             <strong>-15% na pierwsze zamówienie</strong> oraz dostęp do
             ekskluzywnych poradników pielęgnacyjnych.
           </p>
-          <div className="newsletter__form">
-            <input
-              type="email"
-              placeholder="Twój adres e-mail"
-              className="newsletter__input"
-              aria-label="Adres e-mail"
-            />
-            <button className="btn btn--white">ZAPISZ SIĘ</button>
-          </div>
+          {subscribed ? (
+            <div className="newsletter__success">
+              Witamy w społeczności Glowi. Twój kod rabatowy -15% jest już w drodze na Twój adres e-mail.
+            </div>
+          ) : (
+            <div className="newsletter__form">
+              <input
+                type="email"
+                placeholder="Twój adres e-mail"
+                className="newsletter__input"
+                aria-label="Adres e-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleNewsletter(e)}
+              />
+              <button className="btn btn--white" onClick={handleNewsletter}>ZAPISZ SIĘ</button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* ──  BLOG ── */}
+      {/* ── BEAUTY GUIDES / BLOG ── */}
       <section className="section blog">
         <div className="section__inner">
           <div className="section__header">
@@ -327,7 +380,7 @@ function HomePage() {
 
           <div className="blog__grid">
             {blogPosts.map((post) => (
-              <article key={post.id} className="blog-card">
+              <Link key={post.id} to={post.slug} className="blog-card">
                 <div className="blog-card__img-wrap">
                   <img
                     src={post.image}
@@ -340,11 +393,11 @@ function HomePage() {
                   <span className="blog-card__cat">{post.category}</span>
                   <h3 className="blog-card__title">{post.title}</h3>
                   <p className="blog-card__excerpt">{post.excerpt}</p>
-                  <Link to={post.slug} className="blog-card__link">
+                  <span className="blog-card__link">
                     CZYTAJ WIĘCEJ &rsaquo;
-                  </Link>
+                  </span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
