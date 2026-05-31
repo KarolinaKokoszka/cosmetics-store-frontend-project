@@ -15,32 +15,41 @@ import ONasPage                from "./pages/ONasPage";
 import PolitykaPrywatnosciPage from "./pages/PolitykaPrywatnosciPage";
 import RegulaminPage           from "./pages/RegulaminPage";
 import ProductPage from "./pages/ProductPage";
+import { CartProvider } from "./context/CartContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
+import CheckoutPage from "./pages/CheckoutPage";
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <CartProvider>
+      <FavoritesProvider>
+        <BrowserRouter>
+          <Routes>
 
-        {/* Strony Z nawigacją i stopką */}
-        <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
-        <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
-        <Route path="/register" element={<MainLayout><RegisterPage /></MainLayout>} />
-        <Route path="/makijaz" element={<MainLayout><MakijazPage /></MainLayout>} />
-        <Route path="/pielegnacja" element={<MainLayout><PielegnacjaPage /></MainLayout>} />
-        <Route path="/poradniki" element={<MainLayout><PoradnikiPage /></MainLayout>} />
-        <Route path="/koszyk" element={<MainLayout><KoszykPage /></MainLayout>} />
-        <Route path="/ulubione" element={<MainLayout><UlubionePage /></MainLayout>} />
-        <Route path="/kontakt" element={<MainLayout><KontaktPage /></MainLayout>} />
-        <Route path="/dostawa"  element={<DostawaPage />} />
-        <Route path="/zwroty"   element={<ZwrotyPage />} />
-        <Route path="/o-nas"    element={<ONasPage />} />
-        <Route path="/polityka" element={<PolitykaPrywatnosciPage />} />
-        <Route path="/regulamin" element={<RegulaminPage />} />
-        <Route path="/produkt/:id" element={<MainLayout><ProductPage /></MainLayout>} />
+            {/* Strony Z nawigacją i stopką */}
+            <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
+            <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
+            <Route path="/register" element={<MainLayout><RegisterPage /></MainLayout>} />
+            <Route path="/makijaz" element={<MainLayout><MakijazPage /></MainLayout>} />
+            <Route path="/pielegnacja" element={<MainLayout><PielegnacjaPage /></MainLayout>} />
+            <Route path="/poradniki" element={<MainLayout><PoradnikiPage /></MainLayout>} />
+            <Route path="/koszyk" element={<MainLayout><KoszykPage /></MainLayout>} />
+            <Route path="/ulubione" element={<MainLayout><UlubionePage /></MainLayout>} />
+            <Route path="/kontakt" element={<MainLayout><KontaktPage /></MainLayout>} />
+            <Route path="/dostawa"  element={<DostawaPage />} />
+            <Route path="/zwroty"   element={<ZwrotyPage />} />
+            <Route path="/o-nas"    element={<ONasPage />} />
+            <Route path="/polityka" element={<PolitykaPrywatnosciPage />} />
+            <Route path="/regulamin" element={<RegulaminPage />} />
+            <Route path="/produkt/:id" element={<MainLayout><ProductPage /></MainLayout>} />
+            <Route path="/checkout" element={<MainLayout><CheckoutPage /></MainLayout>} />
 
-      </Routes>
-    </BrowserRouter>
+
+          </Routes>
+        </BrowserRouter>
+      </FavoritesProvider>
+    </CartProvider>
   );
 }
 

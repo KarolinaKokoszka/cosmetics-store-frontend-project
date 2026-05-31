@@ -1,0 +1,162 @@
+.fav {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 60px 0 120px;
+}
+
+.fav__title {
+  font-family: 'Noto Serif', serif;
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+  color: #191C1E;
+  margin-bottom: 48px;
+}
+
+.fav__empty {
+  text-align: center;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: #797586;
+  font-family: 'Manrope', sans-serif;
+}
+
+.fav__empty-link {
+  display: inline-block;
+  padding: 20px 40px;
+  background: linear-gradient(90deg, #7B5CF0 0%, #6240D5 100%);
+  color: #fff;
+  border-radius: 9999px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.fav__empty-link:hover { opacity: 0.9; }
+
+.fav__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fav__item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+  padding: 32px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  position: relative;
+}
+
+.fav__img-wrap {
+  flex-shrink: 0;
+  width: 128px;
+  height: 160px;
+  background: #ECEEF0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fav__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fav__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 160px;
+}
+
+.fav__badge {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #6240D5;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.fav__name {
+  font-family: 'Noto Serif', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #191C1E;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.fav__name:hover { color: #7B5CF0; }
+
+.fav__desc {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  color: #797586;
+  margin: 0;
+}
+
+.fav__info-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fav__add-btn {
+  padding: 12px 24px;
+  border: 1px solid #797586;
+  border-radius: 9999px;
+  background: transparent;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #191C1E;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.fav__add-btn:hover {
+  border-color: #7B5CF0;
+  color: #7B5CF0;
+}
+
+.fav__price {
+  font-family: 'Noto Serif', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #191C1E;
+}
+.fav__remove {
+  background: none;
+  border: none;
+  font-size: 20px;      
+  color: #797586;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.fav__remove:hover { color: #c0392b; }
+
+@media (max-width: 768px) {
+  .fav { padding: 40px 24px 80px; }
+  .fav__item { flex-direction: column; }
+  .fav__info { height: auto; gap: 16px; }
+}

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
+import { useCart } from "../context/CartContext";
+
 
 const SCROLL_LINKS = {
   "/nowosci": "section-nowosci",
@@ -47,6 +49,8 @@ function Navbar() {
   const navigate  = useNavigate();
   const location  = useLocation();
   const closeTimer = useRef(null);
+  const { totalItems } = useCart();
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -216,12 +220,15 @@ function Navbar() {
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </Link>
-          <Link to="/koszyk" className="navbar__icon-btn" aria-label="Koszyk">
+          <Link to="/koszyk" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Koszyk">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
+            {totalItems > 0 && (
+              <span className="navbar__cart-badge">{totalItems}</span>
+            )}
           </Link>
         </div>
 
