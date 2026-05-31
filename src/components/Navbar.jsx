@@ -22,19 +22,19 @@ const PIELEGNACJA_CEL = [
 ];
 
 const PIELEGNACJA_RUTYNA = [
-  { label: "Oczyszczanie", path: "/pielegnacja?rutyna=oczyszczanie", icon: "/images/nav/piel-oczyszczanie.jpg" },
-  { label: "Tonizacja",    path: "/pielegnacja?rutyna=tonizacja",    icon: "/images/nav/piel-tonizacja.jpg"    },
-  { label: "Krem",         path: "/pielegnacja?rutyna=krem",         icon: "/images/nav/piel-krem.jpg"         },
-  { label: "Serum",        path: "/pielegnacja?rutyna=serum",        icon: "/images/nav/piel-serum.jpg"        },
+  { label: "Oczyszczanie", path: "/pielegnacja?sub=oczyszczanie", icon: "/images/nav/piel-oczyszczanie.jpg" },
+  { label: "Tonizacja",    path: "/pielegnacja?sub=tonizacja",    icon: "/images/nav/piel-tonizacja.jpg"    },
+  { label: "Krem",         path: "/pielegnacja?sub=krem",         icon: "/images/nav/piel-krem.jpg"         },
+  { label: "Serum",        path: "/pielegnacja?sub=serum",        icon: "/images/nav/piel-serum.jpg"        },
 ];
 
 const NAV_LINKS = [
-  { label: "Nowości",      path: "/nowosci"     },
-  { label: "Promocje",     path: "/promocje"    },
-  { label: "Makijaż",     path: "/makijaz",    megamenu: "makijaz"    },
-  { label: "Pielęgnacja", path: "/pielegnacja", megamenu: "pielegnacja" },
-  { label: "Poradniki",   path: "/poradniki"   },
-  { label: "Kontakt",      path: "/kontakt"     },
+  { label: "Nowości",      path: "/nowosci"      },
+  { label: "Promocje",     path: "/promocje"     },
+  { label: "Makijaż",     path: "/makijaz",     megamenu: "makijaz"     },
+  { label: "Pielęgnacja", path: "/pielegnacja",  megamenu: "pielegnacja" },
+  { label: "Poradniki",   path: "/poradniki"    },
+  { label: "Kontakt",      path: "/kontakt"      },
 ];
 
 function scrollToSection(sectionId) {
@@ -43,11 +43,11 @@ function scrollToSection(sectionId) {
 }
 
 function Navbar() {
-  const [scrolled, setScrolled]       = useState(false);
-  const [openMenu, setOpenMenu]       = useState(null);
-  const [mobileOpen, setMobileOpen]   = useState(false);
-  const navigate  = useNavigate();
-  const location  = useLocation();
+  const [scrolled, setScrolled]     = useState(false);
+  const [openMenu, setOpenMenu]     = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate   = useNavigate();
+  const location   = useLocation();
   const closeTimer = useRef(null);
   const { totalItems } = useCart();
 
@@ -65,13 +65,11 @@ function Navbar() {
     }
   }, [location]);
 
-  // zamknij menu przy zmianie strony
   useEffect(() => {
     setOpenMenu(null);
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // zablokuj scroll body gdy mobile menu otwarte
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -107,15 +105,7 @@ function Navbar() {
           <img src="/logo.png" alt="Glowi" className="navbar__logo-img" />
         </Link>
 
-        {/* RZĄD 1: auth (desktop) */}
-        <div className="navbar__auth">
-          <Link to="/login"    className="navbar__text-link">ZALOGUJ SIĘ</Link>
-          <Link to="/register" className="navbar__text-link navbar__text-link--register">
-            ZAREJESTRUJ SIĘ
-          </Link>
-        </div>
-
-        {/* RZĄD 2: nav (desktop) */}
+        {/* NAV — desktop */}
         <nav className="navbar__nav">
           {NAV_LINKS.map(({ label, path, megamenu }) => (
             <div
@@ -139,8 +129,9 @@ function Navbar() {
                 )}
               </NavLink>
 
+              {/* MEGAMENU MAKIJAŻ */}
               {megamenu === "makijaz" && openMenu === "makijaz" && (
-                <div className="megamenu megamenu--makijaz">
+                <div className="megamenu">
                   <div className="megamenu__inner">
                     <p className="megamenu__heading">Kategoria</p>
                     <ul className="megamenu__list">
@@ -162,8 +153,9 @@ function Navbar() {
                 </div>
               )}
 
+              {/* MEGAMENU PIELĘGNACJA */}
               {megamenu === "pielegnacja" && openMenu === "pielegnacja" && (
-                <div className="megamenu megamenu--pielegnacja">
+                <div className="megamenu">
                   <div className="megamenu__inner megamenu__inner--two-col">
                     <div className="megamenu__col">
                       <p className="megamenu__heading">Obszar</p>
@@ -209,6 +201,9 @@ function Navbar() {
         </nav>
 
         {/* IKONY (desktop) */}
+        <div className="navbar__actions">
+          <Link to="/login"    className="navbar__text-link">ZALOGUJ SIĘ</Link>
+          <Link to="/register" className="navbar__text-link navbar__text-link--register">ZAREJESTRUJ SIĘ</Link>
         <div className="navbar__icons">
           <button className="navbar__icon-btn" aria-label="Szukaj">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -230,9 +225,10 @@ function Navbar() {
               <span className="navbar__cart-badge">{totalItems}</span>
             )}
           </Link>
+          </div>
         </div>
 
-        {/* HAMBURGER + IKONY (mobile) */}
+        {/* HAMBURGER — mobile */}
         <div className="navbar__mobile-actions">
           <Link to="/koszyk" className="navbar__icon-btn" aria-label="Koszyk">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
