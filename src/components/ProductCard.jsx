@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import "./ProductCard.css";
+import { useCart }      from "../context/CartContext";
+import { useFavorites } from "../context/FavoritesContext";
 
 function ProductCard({ product }) {
+
+  const { addToCart }        = useCart();
+  const { toggleFavorite, isFavorite } = useFavorites();
+
   return (
     <div className="product-card">
       <Link to={`/produkt/${product.id}`} className="product-card__image-link">
@@ -19,11 +25,19 @@ function ProductCard({ product }) {
           )}
 
           <button
-            className="product-card__wishlist"
+            className={`product-card__wishlist ${isFavorite(product.id) ? "product-card__wishlist--active" : ""}`}
             aria-label="Dodaj do ulubionych"
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => { e.preventDefault(); toggleFavorite(product); }}
           >
-            ♡
+            <svg
+              width="20" height="18"
+              viewBox="0 0 24 24"
+              fill={isFavorite(product.id) ? "currentColor" : "none"}
+              stroke="currentColor"
+              strokeWidth="1.8"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
           </button>
         </div>
       </Link>

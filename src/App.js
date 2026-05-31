@@ -16,12 +16,17 @@ import ONasPage                from "./pages/ONasPage";
 import PolitykaPrywatnosciPage from "./pages/PolitykaPrywatnosciPage";
 import RegulaminPage           from "./pages/RegulaminPage";
 import ProductPage from "./pages/ProductPage";
+import { CartProvider } from "./context/CartContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
+import CheckoutPage from "./pages/CheckoutPage";
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <CartProvider>
+      <FavoritesProvider>
+        <BrowserRouter>
+          <Routes>
 
         {/* Strony Z nawigacją i stopką */}
         <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
@@ -40,9 +45,12 @@ function App() {
         <Route path="/polityka" element={<PolitykaPrywatnosciPage />} />
         <Route path="/regulamin" element={<RegulaminPage />} />
         <Route path="/produkt/:id" element={<MainLayout><ProductPage /></MainLayout>} />
+        <Route path="/checkout" element={<MainLayout><CheckoutPage /></MainLayout>} />
 
-      </Routes>
-    </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </FavoritesProvider>
+    </CartProvider>
   );
 }
 

@@ -53,8 +53,8 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(4px);
@@ -169,3 +169,5 @@
   text-decoration: none;
   display: block;
 }
+
+.product-card__wishlist--active { color: #7B5CF0; }

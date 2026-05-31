@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect} from "react";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./ProductListPage.css";
@@ -18,21 +18,40 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
   const initSub    = subValues.includes(urlSub)    ? urlSub    : "wszystko";
   const initRutyna = rutynaValues.includes(urlRutyna) ? urlRutyna    : "wszystko";
 
-  const [selectedSub,    setSelectedSub]    = useState(initSub);
-  const [selectedRutyna, setSelectedRutyna] = useState(initRutyna);
+  //const [selectedSub,    setSelectedSub]    = useState(initSub);
+  //const [selectedRutyna, setSelectedRutyna] = useState(initRutyna);
+  const [selectedSubs,    setSelectedSubs]    = useState(initSub    === "wszystko" ? [] : [initSub]);
+  const [selectedRutynas, setSelectedRutynas] = useState(initRutyna === "wszystko" ? [] : [initRutyna]);
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [sort, setSort]         = useState("domyslnie");
 
   const [appliedFilters, setAppliedFilters] = useState({
-    sub:    initSub,
-    rutyna: initRutyna,
-    min:    "",
-    max:    "",
-    sort:   "domyslnie",
+    subs: initSub    === "wszystko" ? [] : [initSub],
+    rutynas: initRutyna === "wszystko" ? [] : [initRutyna],
+    min: "", max: "", sort: "domyslnie",
   });
 
   const [currentPage, setCurrentPage] = useState(1);
+
+   //reakcja na zmianę URL
+  useEffect(() => {
+    const newSub    = subValues.includes(urlSub)       ? urlSub    : null;
+    const newRutyna = rutynaValues.includes(urlRutyna) ? urlRutyna : null;
+
+    setSelectedSubs(newSub ? [newSub] : []);
+    setSelectedRutynas(newRutyna ? [newRutyna] : []);
+    setAppliedFilters({
+      subs:    newSub    ? [newSub]    : [],
+      rutynas: newRutyna ? [newRutyna] : [],
+      min: "", max: "", sort: "domyslnie",
+    });
+    setPriceMin("");
+    setPriceMax("");
+    setSort("domyslnie");
+    setCurrentPage(1);
+  }, [urlSub, urlRutyna]);
+
 
   function changePage(page) {
     setCurrentPage(page);
@@ -42,13 +61,13 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
   const filtered = useMemo(() => {
     let result = products.filter((p) => p.category === category);
 
-    if (appliedFilters.sub !== "wszystko") {
-      result = result.filter((p) => p.subcategory === appliedFilters.sub);
+    if (appliedFilters.subs.length > 0) {
+      result = result.filter((p) => appliedFilters.subs.includes(p.subcategory));
     }
 
-    if (appliedFilters.rutyna !== "wszystko") {
+    if (appliedFilters.rutynas.length > 0) {
       result = result.filter(
-        (p) => Array.isArray(p.rutyna) && p.rutyna.includes(appliedFilters.rutyna)
+        (p) => Array.isArray(p.rutyna) && p.rutyna.some((r) => appliedFilters.rutynas.includes(r))
       );
     }
 
@@ -58,7 +77,6 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
     if (appliedFilters.max !== "") {
       result = result.filter((p) => p.price <= Number(appliedFilters.max));
     }
-
     if (appliedFilters.sort === "cena-asc") {
       result = [...result].sort((a, b) => a.price - b.price);
     } else if (appliedFilters.sort === "cena-desc") {
@@ -77,29 +95,37 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
   );
 
   function applyFilters() {
-    setAppliedFilters({ sub: selectedSub, rutyna: selectedRutyna, min: priceMin, max: priceMax, sort });
+    setAppliedFilters({ subs: selectedSubs, rutynas: selectedRutynas, min: priceMin, max: priceMax, sort });
     changePage(1);
   }
 
   function clearFilters() {
-    setSelectedSub("wszystko");
-    setSelectedRutyna("wszystko");
+    setSelectedSubs([]);
+    setSelectedRutynas([]);
     setPriceMin("");
     setPriceMax("");
     setSort("domyslnie");
-    setAppliedFilters({ sub: "wszystko", rutyna: "wszystko", min: "", max: "", sort: "domyslnie" });
+    setAppliedFilters({ subs: [], rutynas: [], min: "", max: "", sort: "domyslnie" });
     changePage(1);
   }
 
-  // gdy wybierasz sub, resetuj rutynę i odwrotnie
-  function handleSubChange(value) {
-    setSelectedSub(value);
-    setSelectedRutyna("wszystko");
+  function handleSubToggle(value) {
+    setSelectedSubs((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+    setSelectedRutynas([]);
   }
 
-  function handleRutynaChange(value) {
-    setSelectedRutyna(value);
-    setSelectedSub("wszystko");
+  function handleRutynaToggle(value) {
+    setSelectedRutynas((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+    setSelectedSubs([]);
+  }
+
+  function handleAllToggle() {
+    setSelectedSubs([]);
+    setSelectedRutynas([]);
   }
 
   return (
@@ -122,8 +148,8 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
             <label className="plp__filter-check">
               <input
                 type="checkbox"
-                checked={selectedSub === "wszystko" && selectedRutyna === "wszystko"}
-                onChange={() => { setSelectedSub("wszystko"); setSelectedRutyna("wszystko"); }}
+                checked={selectedSubs.length === 0 && selectedRutynas.length === 0}
+                onChange={handleAllToggle}
               />
               <span>Wszystko</span>
             </label>
@@ -131,8 +157,8 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
               <label key={sub.value} className="plp__filter-check">
                 <input
                   type="checkbox"
-                  checked={selectedSub === sub.value}
-                  onChange={() => handleSubChange(sub.value)}
+                  checked={selectedSubs.includes(sub.value)}
+                  onChange={() => handleSubToggle(sub.value)}
                 />
                 <span>{sub.label}</span>
               </label>
@@ -147,8 +173,8 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
                 <label key={r.value} className="plp__filter-check">
                   <input
                     type="checkbox"
-                    checked={selectedRutyna === r.value}
-                    onChange={() => handleRutynaChange(r.value)}
+                    checked={selectedRutynas.includes(r.value)}
+                    onChange={() => handleRutynaToggle(r.value)}
                   />
                   <span>{r.label}</span>
                 </label>

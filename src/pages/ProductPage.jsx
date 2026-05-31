@@ -2,7 +2,11 @@ import { useParams, Link } from "react-router-dom";
 import products from "../data/products";
 import reviews from "../data/reviews";
 import "./ProductPage.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback  } from "react";
+
+import { useCart }      from "../context/CartContext";
+import { useFavorites } from "../context/FavoritesContext";
+import Toast            from "../components/Toast";
 
 
 function StarRating({ rating, size = 19 }) {
@@ -33,6 +37,18 @@ function Accordion({ title, children }) {
 function ProductPage() {
   const { id } = useParams();
   const [activeImg, setActiveImg] = useState(0);
+
+  const { addToCart }                      = useCart();
+  const { toggleFavorite, isFavorite }     = useFavorites();
+  const [toast, setToast]                  = useState({ visible: false, message: "" });
+
+  const showToast = useCallback((message) => {
+    setToast({ visible: true, message });
+  }, []);
+
+  const hideToast = useCallback(() => {
+    setToast((t) => ({ ...t, visible: false }));
+  }, []);
 
   // reset przy zmianie produktu + scroll na górę
   useEffect(() => {
@@ -134,12 +150,23 @@ function ProductPage() {
           )}
 
           <div className="pdp__actions">
-            <button className="pdp__btn-cart">DODAJ DO KOSZYKA</button>
-            <button className="pdp__btn-wishlist">
-              <svg width="20" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <button
+              className="pdp__btn-cart"
+              onClick={() => { addToCart(product); showToast("Dodano do koszyka!"); }}
+            >
+              DODAJ DO KOSZYKA
+            </button>
+
+            <button
+              className={`pdp__btn-wishlist ${isFavorite(product.id) ? "pdp__btn-wishlist--active" : ""}`}
+              onClick={() => toggleFavorite(product)}
+            >
+              <svg width="20" height="19" viewBox="0 0 24 24"
+                fill={isFavorite(product.id) ? "currentColor" : "none"}
+                stroke="currentColor" strokeWidth="1.8">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
-              DODAJ DO ULUBIONYCH
+              {isFavorite(product.id) ? "USUŃ Z ULUBIONYCH" : "DODAJ DO ULUBIONYCH"}
             </button>
           </div>
 
@@ -208,6 +235,7 @@ function ProductPage() {
           </div>
         </section>
       )}
+      <Toast message={toast.message} visible={toast.visible} onHide={hideToast} />
     </div>
   );
 }

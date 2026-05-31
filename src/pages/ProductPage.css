@@ -461,3 +461,13 @@
 @media (max-width: 480px) {
   .pdp__related-grid { grid-template-columns: 1fr; }
 }
+
+.pdp__btn-wishlist--active {
+  background: #f3eeff;
+  border-color: #7B5CF0;
+  color: #7B5CF0;
+}
+
+.pdp__btn-wishlist--active svg {
+  color: #7B5CF0;
+}
