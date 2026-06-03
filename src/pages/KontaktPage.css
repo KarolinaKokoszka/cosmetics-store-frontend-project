@@ -1,0 +1,238 @@
+.kontakt {
+  max-width: 1072px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* Nagłówek */
+.kontakt__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.kontakt__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.32px;
+  color: #1C1A23;
+  margin: 0;
+}
+
+.kontakt__subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  line-height: 29px;
+  color: #484554;
+  margin: 0;
+}
+
+/* Layout */
+.kontakt__layout {
+  display: grid;
+  grid-template-columns: 389px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Karta */
+.kontakt__info,
+.kontakt__form-card {
+  background: #fff;
+  border: 1px solid #E6E0ED;
+  box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+  border-radius: 12px;
+  padding: 47px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.kontakt__info-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1C1A23;
+  margin: 0;
+}
+
+/* Info items */
+.kontakt__info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.kontakt__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.kontakt__info-icon {
+  width: 48px;
+  height: 48px;
+  background: #F7F1FE;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kontakt__info-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #1C1A23;
+  margin: 0 0 4px 0;
+}
+
+.kontakt__info-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #484554;
+  margin: 0;
+}
+
+.kontakt__info-hours {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #797586;
+  margin: 3px 0 0 0;
+}
+
+/* Formularz */
+.kontakt__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kontakt__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kontakt__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #1C1A23;
+}
+
+.kontakt__input,
+.kontakt__select,
+.kontakt__textarea {
+  width: 100%;
+  padding: 17px 16px;
+  background: #F1F5F9;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  color: #1C1A23;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.kontakt__input:focus,
+.kontakt__select:focus,
+.kontakt__textarea:focus {
+  border-color: #7B5CF0;
+  background: #fff;
+}
+
+.kontakt__input--error {
+  border-color: #BA1A1A !important;
+  background: #fff5f5;
+}
+
+.kontakt__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%236B7280' stroke-width='1.8'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 48px;
+  cursor: pointer;
+}
+
+.kontakt__textarea {
+  resize: vertical;
+  min-height: 160px;
+  line-height: 24px;
+}
+
+.kontakt__error {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #BA1A1A;
+  margin: 0;
+}
+
+.kontakt__submit {
+  width: 100%;
+  padding: 16px 32px;
+  background: #7B5CF0;
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: opacity 0.2s;
+}
+
+.kontakt__submit:hover { opacity: 0.9; }
+
+/* Sukces */
+.kontakt__success {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #edf7f1;
+  border: 1px solid #a3d9b8;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: #1a5c38;
+}
+
+.kontakt__success-icon {
+  width: 24px;
+  height: 24px;
+  background: #2c7a4b;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* Responsywność */
+@media (max-width: 900px) {
+  .kontakt__layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .kontakt__info,
+  .kontakt__form-card { padding: 32px 24px; }
+}

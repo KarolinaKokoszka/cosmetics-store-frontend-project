@@ -20,7 +20,6 @@ import { CartProvider } from "./context/CartContext";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import CheckoutPage from "./pages/CheckoutPage";
 
-
 function App() {
   return (
     <CartProvider>

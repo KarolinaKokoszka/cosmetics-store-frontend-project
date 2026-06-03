@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
 import "./HomePage.css";
 
 /* ===========================
@@ -137,22 +136,7 @@ function HeroSlider() {
 }
 
 
-/* ── dane: Nowości ── */
-const newProducts = [
-  {
-    id: 12,
-    name: "Hydra Glow Serum",
-    shortDesc: "Intensywne nawilżenie 24h",
-    price: 149,
-    oldPrice: null,
-    images: ["/images/skincare/hydra-serum-1.jpg"],
-    badge: "BESTSELLER",
-    rating: 4.2,
-    reviewCount: 124,
-    category: "pielegnacja",
-    slug: "/produkt/12",
-  },
-];
+
 
 /* ── dane: Wyjątkowe Oferty ── */
 const promoProducts = [
