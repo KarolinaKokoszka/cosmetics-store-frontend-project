@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.konto {
+  background: #F5F3FA;
+  min-height: calc(100vh - 120px);
+}
+
+.konto__inner {
+  max-width: 1072px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── GÓRNY PANEL ── */
+.konto__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.konto__side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* ── BOX ── */
+.konto__box {
+  background: #fff;
+  border: 1px solid #E6E0ED;
+  box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+  border-radius: 12px;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.konto__box--danger {
+  border: 1px solid #FFE4E4;
+}
+
+.konto__box-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1C1A23;
+  margin: 0 0 8px;
+}
+
+.konto__box-title--danger {
+  color: #BA1A1A;
+}
+
+.konto__section-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #1C1A23;
+  margin: 0 0 4px;
+}
+
+/* ── FORMULARZ ── */
+.konto__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-width: 0;
+  margin-bottom: 4px;
+}
+
+.konto__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin-bottom: 20px;
+}
+
+.konto__label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #1C1A23;
+}
+
+.konto__input {
+  width: 100%;
+  padding: 14px 14px;
+  background: #F1F5F9;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: #1C1A23;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.konto__input:focus {
+  border-color: #7B5CF0;
+  background: #fff;
+}
+
+.konto__input:disabled {
+  background: #F1F5F9;
+  color: #797586;
+  cursor: not-allowed;
+}
+
+/* ── PRZYCISKI ── */
+.konto__btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  border-radius: 9999px;
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  border: none;
+}
+
+.konto__btn--primary {
+  background: #7B5CF0;
+  color: #fff;
+}
+
+.konto__btn--primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.konto__btn--outline {
+  background: transparent;
+  color: #1C1A23;
+  border: 2px solid #E6E0ED;
+}
+
+.konto__btn--outline:hover {
+  border-color: #7B5CF0;
+  color: #7B5CF0;
+}
+
+.konto__btn--danger {
+  background: #BA1A1A;
+  color: #fff;
+  width: 100%;
+}
+
+.konto__btn--danger:hover {
+  opacity: 0.9;
+}
+
+.konto__logout {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #797586;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  align-self: flex-start;
+}
+
+.konto__logout:hover { color: #484554; }
+
+.konto__msg {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #7B5CF0;
+  margin: 0;
+}
+
+.konto__danger-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #484554;
+  margin: 0;
+}
+
+.konto__delete-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.konto__delete-btns {
+  display: flex;
+  gap: 12px;
+}
+
+/* ── HISTORIA ZAMÓWIEŃ ── */
+.konto__orders {
+  width: 100%;
+}
+
+.konto__order {
+  border-bottom: 1px solid #E6E0ED;
+  padding: 20px 0;
+}
+
+.konto__order:last-child {
+  border-bottom: none;
+}
+
+.konto__order-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+.konto__order-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #1C1A23;
+}
+
+.konto__order-date {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #797586;
+}
+
+.konto__order-item {
+  display: grid;
+  grid-template-columns: 64px 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.konto__order-item:last-child {
+  border-bottom: none;
+}
+
+.konto__order-img-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #F7F1FE;
+}
+
+.konto__order-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.konto__order-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  color: #1C1A23;
+}
+
+.konto__order-price {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1C1A23;
+  white-space: nowrap;
+}
+
+.konto__review-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #1C1A23;
+  background: transparent;
+  border: 2px solid #E6E0ED;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.konto__review-btn:hover {
+  border-color: #7B5CF0;
+  color: #7B5CF0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .konto__top {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .konto__inner {
+    padding: 32px 16px 60px;
+  }
+
+  .konto__box {
+    padding: 28px 20px;
+  }
+
+  .konto__row {
+    grid-template-columns: 1fr;
+  }
+
+  .konto__order-item {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .konto__order-price,
+  .konto__review-btn {
+    grid-column: 2;
+  }
+}

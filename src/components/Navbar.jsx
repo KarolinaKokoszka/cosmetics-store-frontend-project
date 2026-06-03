@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 
 const SCROLL_LINKS = {
@@ -50,7 +51,7 @@ function Navbar() {
   const location   = useLocation();
   const closeTimer = useRef(null);
   const { totalItems } = useCart();
-
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -94,6 +95,11 @@ function Navbar() {
 
   function handleMouseLeave() {
     closeTimer.current = setTimeout(() => setOpenMenu(null), 120);
+  }
+
+  async function handleLogout() {
+    await logout();
+    navigate("/");
   }
 
   return (
@@ -202,29 +208,42 @@ function Navbar() {
 
         {/* IKONY (desktop) */}
         <div className="navbar__actions">
-          <Link to="/login"    className="navbar__text-link">ZALOGUJ SIĘ</Link>
-          <Link to="/register" className="navbar__text-link navbar__text-link--register">ZAREJESTRUJ SIĘ</Link>
-        <div className="navbar__icons">
-          <button className="navbar__icon-btn" aria-label="Szukaj">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-          </button>
-          <Link to="/ulubione" className="navbar__icon-btn" aria-label="Ulubione">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-          </Link>
-          <Link to="/koszyk" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Koszyk">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 0 1-8 0"/>
-            </svg>
-            {totalItems > 0 && (
-              <span className="navbar__cart-badge">{totalItems}</span>
-            )}
-          </Link>
+          {user ? (
+            <>
+              <span className="navbar__text-link navbar__text-link--greeting">
+                Witaj, {user.displayName?.split(" ")[0] || "Konto"}
+              </span>
+              <Link to="/moje-konto" className="navbar__text-link navbar__text-link--register">
+                MOJE KONTO
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login"    className="navbar__text-link">ZALOGUJ SIĘ</Link>
+              <Link to="/register" className="navbar__text-link navbar__text-link--register">ZAREJESTRUJ SIĘ</Link>
+            </>
+          )}
+          <div className="navbar__icons">
+            <button className="navbar__icon-btn" aria-label="Szukaj">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+            </button>
+            <Link to="/ulubione" className="navbar__icon-btn" aria-label="Ulubione">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </Link>
+            <Link to="/koszyk" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Koszyk">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+              {totalItems > 0 && (
+                <span className="navbar__cart-badge">{totalItems}</span>
+              )}
+            </Link>
           </div>
         </div>
 
@@ -261,8 +280,21 @@ function Navbar() {
           </Link>
         ))}
         <div className="navbar__mobile-auth">
-          <Link to="/login"    className="navbar__mobile-btn navbar__mobile-btn--outline">ZALOGUJ SIĘ</Link>
-          <Link to="/register" className="navbar__mobile-btn navbar__mobile-btn--fill">ZAREJESTRUJ SIĘ</Link>
+          {user ? (
+            <>
+              <Link to="/moje-konto" className="navbar__mobile-btn navbar__mobile-btn--fill">
+                MOJE KONTO
+              </Link>
+              <button onClick={handleLogout} className="navbar__mobile-btn navbar__mobile-btn--outline">
+                WYLOGUJ SIĘ
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login"    className="navbar__mobile-btn navbar__mobile-btn--outline">ZALOGUJ SIĘ</Link>
+              <Link to="/register" className="navbar__mobile-btn navbar__mobile-btn--fill">ZAREJESTRUJ SIĘ</Link>
+            </>
+          )}
         </div>
       </div>
 

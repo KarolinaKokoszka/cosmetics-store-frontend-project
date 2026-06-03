@@ -31,7 +31,7 @@ function PoradnikiPage() {
         <div className="poradniki__header">
           <div>
             <h1 className="poradniki__title">Poradniki</h1>
-            <p className="poradniki__subtitle">Ekspertki wiedzy o pielęgnacji i makijażu — sprawdzone porady, które naprawdę działają.</p>
+            <p className="poradniki__subtitle">Ekspertki wiedzy o pielęgnacji i makijażu - sprawdzone porady, które naprawdę działają.</p>
           </div>
 
           {/* DROPDOWN FILTR */}
