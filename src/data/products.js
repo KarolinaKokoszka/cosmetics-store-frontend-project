@@ -448,7 +448,7 @@ const products = [
     name: "Lip Sleeping Mask",
     shortDesc: "Maska na noc na usta",
     category: "pielegnacja",
-    subcategory: "cialo",
+    subcategory: "twarz",
     price: 59,
     oldPrice: null,
     badge: null,
@@ -458,7 +458,7 @@ const products = [
     usage: "Nałóż grubą warstwę maski na usta przed snem. Pozostaw na całą noc. Rano usuń nadmiar chusteczką lub spłucz.",
     ingredients: ["Masło shea", "Olej z dzikiej róży", "Witamina E", "Kolagen"],
     inci: "Petrolatum, Butyrospermum Parkii Butter, Rosa Canina Oil, Tocopheryl Acetate, Hydrolyzed Collagen",
-    images: ["/images/bodycare/lip-mask-1.jpg", "/images/bodycare/lip-mask-2.jpg"]
+    images: ["/images/skincare/lip-mask-1.jpg", "/images/skincare/lip-mask-2.jpg"]
   },
   {
     id: 26,

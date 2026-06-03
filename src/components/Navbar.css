@@ -440,3 +440,11 @@
   justify-content: center;
   line-height: 1;
 }
+
+.navbar__text-link--greeting {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: default;
+}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+import products from "../data/products";
 import "./HomePage.css";
 
 /* ===========================
@@ -136,51 +138,6 @@ function HeroSlider() {
 }
 
 
-
-
-/* ── dane: Wyjątkowe Oferty ── */
-const promoProducts = [
-  {
-    id: 18,
-    name: "Zestaw Poranny Blask",
-    shortDesc: "Kompletna poranna rutyna",
-    price: 349,
-    oldPrice: 439,
-    images: ["/images/skincare/morning-set-1.jpg"],
-    badge: "PROMOCJA",
-    rating: 3.5,
-    reviewCount: 52,
-    category: "pielegnacja",
-    slug: "/produkt/18",
-  },
-  {
-    id: 19,
-    name: "Duet Ochronny SPF",
-    shortDesc: "Ochrona i nawilżenie w jednym",
-    price: 189,
-    oldPrice: 220,
-    images: ["/images/skincare/spf-set-1.jpg"],
-    badge: "PROMOCJA",
-    rating: 4.0,
-    reviewCount: 124,
-    category: "pielegnacja",
-    slug: "/produkt/19",
-  },
-  {
-    id: 20,
-    name: "Nocna Regeneracja + Maska",
-    shortDesc: "Intensywna kuracja na noc",
-    price: 189,
-    oldPrice: 220,
-    images: ["/images/skincare/night-cream-1.jpg"],
-    badge: "PROMOCJA",
-    rating: 4.4,
-    reviewCount: 124,
-    category: "pielegnacja",
-    slug: "/produkt/20",
-  },
-];
-
 /* ── dane: Blog ── */
 const blogPosts = [
   {
@@ -296,26 +253,10 @@ function HomePage() {
           </div>
 
           <div className="oferty__grid">
-
-            {promoProducts.map((p) => (
-              <Link key={p.id} to={p.slug} className="oferty__card">
-                <div className="oferty__img-wrap">
-                  <img src={p.images[0]} alt={p.name} className="oferty__img" />
-                  <span className="oferty__badge">PROMOCJA</span>
-                </div>
-                <div className="oferty__info">
-                  <h3 className="oferty__name">{p.name.toUpperCase()}</h3>
-                  <div className="oferty__pricing">
-                    <span className="oferty__price">{p.price} PLN</span>
-                    {p.oldPrice && <span className="oferty__old-price">{p.oldPrice} PLN</span>}
-                  </div>
-                  <button className="oferty__btn" onClick={(e) => e.preventDefault()}>
-                    DODAJ DO KOSZYKA
-                  </button>
-                </div>
-              </Link>
-            ))}
-
+            {[18, 19, 20].map((id) => {
+              const p = products.find((x) => x.id === id);
+              return p ? <ProductCard key={p.id} product={p} /> : null;
+            })}
           </div>
         </div>
       </section>
