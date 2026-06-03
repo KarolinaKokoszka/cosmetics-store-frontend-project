@@ -15,7 +15,6 @@ function KoszykPage() {
   const toFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal;
 
   const [toast, setToast] = useState({ visible: false, message: "" });
-  const showToast  = useCallback((msg) => setToast({ visible: true, message: msg }), []);
   const hideToast  = useCallback(() => setToast((t) => ({ ...t, visible: false })), []);
 
 

@@ -241,7 +241,7 @@ const products = [
     usage: "Nałóż olejek na suche dłonie i masuj skórę twarzy przez 60 sekund. Dodaj odrobinę wody — olejek zamieni się w mleczko. Spłucz dokładnie.",
     ingredients: ["Ekstrakt z piwonii", "Olej z dzikiej róży", "Witamina E"],
     inci: "Helianthus Annuus Seed Oil, Rosa Canina Oil, Paeonia Suffruticosa Extract, Tocopheryl Acetate",
-    images: ["/images/skincare/peony-oil-1.jpg", "/images/skincare/peony-oil-2.jpg"]
+    images: ["/images/skincare/peony-oil-1.jpg", "/images/skincare/peony-oil-2.jpg", "/images/skincare/peony-oil-3.jpg"]
   },
   {
     id: 14,
@@ -333,7 +333,7 @@ const products = [
     usage: "Stosuj codziennie rano w kolejności: żel oczyszczający → serum → krem SPF → mgiełka.",
     ingredients: ["Witamina C", "SPF 30", "Kwas Hialuronowy", "Niacynamid"],
     inci: "Zestaw zawiera: Cleansing Gel, Vitamin C Serum, SPF 30 Moisturizer, Setting Mist",
-    images: ["/images/skincare/morning-set-1.jpg", "/images/skincare/morning-set-2.jpg", "/images/skincare/morning-set-3.jpg"]
+    images: ["/images/skincare/morning-set-1.jpg", "/images/skincare/morning-set-2.jpg"]
   },
   {
     id: 19,
@@ -369,7 +369,7 @@ const products = [
     usage: "Jako krem: nałóż cienką warstwę wieczorem na twarz i szyję. Jako maska: nałóż grubą warstwę na 20 minut lub zostaw na noc. Stosuj po serum.",
     ingredients: ["Retinol 0.3%", "Peptydy", "Masło shea", "Kwas Hialuronowy"],
     inci: "Aqua, Butyrospermum Parkii Butter, Retinol, Palmitoyl Tripeptide-1, Sodium Hyaluronate, Glycerin",
-    images: ["/images/skincare/night-cream-1.jpg", "/images/skincare/night-cream-2.jpg", "/images/skincare/night-cream-3.jpg"]
+    images: ["/images/skincare/night-cream-1.jpg", "/images/skincare/night-cream-2.jpg"]
   },
 
   // ==================== PIELĘGNACJA — WŁOSY ====================

@@ -50,6 +50,7 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
     setPriceMax("");
     setSort("domyslnie");
     setCurrentPage(1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlSub, urlRutyna]);
 
 
