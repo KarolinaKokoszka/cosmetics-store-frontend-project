@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import SearchOverlay from "./SearchOverlay";
 
 
 const SCROLL_LINKS = {
@@ -47,11 +48,14 @@ function Navbar() {
   const [scrolled, setScrolled]     = useState(false);
   const [openMenu, setOpenMenu]     = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const navigate   = useNavigate();
   const location   = useLocation();
   const closeTimer = useRef(null);
   const { totalItems } = useCart();
   const { user, logout } = useAuth();
+  const [mobileMakeupOpen, setMobileMakeupOpen] = useState(false);
+  const [mobileSkincareOpen, setMobileSkincareOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -226,7 +230,7 @@ function Navbar() {
             </>
           )}
           <div className="navbar__icons">
-            <button className="navbar__icon-btn" aria-label="Szukaj">
+            <button className="navbar__icon-btn" aria-label="Szukaj" onClick={() => setSearchOpen(true)}>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
               </svg>
@@ -251,39 +255,185 @@ function Navbar() {
 
         {/* HAMBURGER — mobile */}
         <div className="navbar__mobile-actions">
-          <Link to="/koszyk" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Koszyk">
+
+          <button
+            className="navbar__icon-btn"
+            aria-label="Szukaj"
+            onClick={() => setSearchOpen(true)}
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
+
+          <Link to="/ulubione" className="navbar__icon-btn" aria-label="Ulubione">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </Link>
+
+          <Link
+            to="/koszyk"
+            className="navbar__icon-btn navbar__icon-btn--cart"
+            aria-label="Koszyk"
+          >
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
+
             {totalItems > 0 && (
-              <span className="navbar__cart-badge">{totalItems}</span>
+              <span className="navbar__cart-badge">
+                {totalItems}
+              </span>
             )}
           </Link>
+
           <button
             className={`navbar__hamburger${mobileOpen ? " navbar__hamburger--open" : ""}`}
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Menu"
           >
-            <span /><span /><span />
+            <span />
+            <span />
+            <span />
           </button>
+
         </div>
 
       </div>
 
       {/* MOBILE MENU */}
       <div className={`navbar__mobile-menu${mobileOpen ? " navbar__mobile-menu--open" : ""}`}>
-        {NAV_LINKS.map(({ label, path }) => (
-          <Link
-            key={path}
-            to={path}
-            className="navbar__mobile-link"
-            onClick={(e) => handleNavClick(e, path)}
+      <Link
+        to="/nowosci"
+        className="navbar__mobile-link"
+        onClick={(e) => handleNavClick(e, "/nowosci")}
+      >
+        Nowości
+      </Link>
+
+      <Link
+        to="/promocje"
+        className="navbar__mobile-link"
+        onClick={(e) => handleNavClick(e, "/promocje")}
+      >
+        Promocje
+      </Link>
+
+      {/* MAKIJAŻ */}
+      <div className="navbar__mobile-group">
+        <button
+          className="navbar__mobile-parent"
+          onClick={() => setMobileMakeupOpen(!mobileMakeupOpen)}
+        >
+          <span>Makijaż</span>
+          <svg
+            className={`navbar__mobile-chevron ${
+              mobileMakeupOpen
+                ? "navbar__mobile-chevron--open"
+                : ""
+            }`}
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
           >
-            {label}
-          </Link>
-        ))}
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        {mobileMakeupOpen && (
+          <div className="navbar__mobile-submenu">
+            {MAKIJAZ_ITEMS.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="navbar__mobile-sublink"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* PIELĘGNACJA */}
+      <div className="navbar__mobile-group">
+        <button
+          className="navbar__mobile-parent"
+          onClick={() => setMobileSkincareOpen(!mobileSkincareOpen)}
+        >
+          <span>Pielęgnacja</span>
+          <svg
+            className={`navbar__mobile-chevron ${
+              mobileSkincareOpen
+                ? "navbar__mobile-chevron--open"
+                : ""
+            }`}
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        {mobileSkincareOpen && (
+          <div className="navbar__mobile-submenu">
+
+            <div className="navbar__mobile-subtitle">
+              Obszar
+            </div>
+
+            {PIELEGNACJA_CEL.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="navbar__mobile-sublink"
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            <div className="navbar__mobile-subtitle">
+              Rutyna
+            </div>
+
+            {PIELEGNACJA_RUTYNA.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="navbar__mobile-sublink"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <Link to="/poradniki" className="navbar__mobile-link">
+        Poradniki
+      </Link>
+
+      <Link to="/kontakt" className="navbar__mobile-link">
+        Kontakt
+      </Link>
         <div className="navbar__mobile-auth">
           {user ? (
             <>
@@ -302,6 +452,8 @@ function Navbar() {
           )}
         </div>
       </div>
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
 
     </header>
   );

@@ -1190,8 +1190,9 @@
   .hero__sub      { font-size: 0.78rem !important; }
 
   .hero__content .btn {
-    font-size: 0.65rem !important;
-    padding: 8px 18px;
+    font-size: 0.58rem !important;
+    padding: 6px 12px;
+    min-width: 120px;
   }
 
   .section__inner { padding: 0 16px; }
