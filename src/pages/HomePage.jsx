@@ -41,7 +41,7 @@ function HeroSlider() {
               <p className="hero__sub">
                 Synergia klinicznej precyzji i czystej natury zamknięta w eleganckich formułach.
               </p>
-              <Link to="/nowosci" className="btn btn--primary">
+              <Link to="/produkt/18" className="btn btn--primary">
                 Sprawdź kolekcję
               </Link>
             </div>
