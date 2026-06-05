@@ -2,12 +2,11 @@ import { useParams, Link } from "react-router-dom";
 import products from "../data/products";
 import reviews from "../data/reviews";
 import "./ProductPage.css";
-import { useState, useEffect, useCallback  } from "react";
-
+import { useState, useEffect, useCallback } from "react";
 import { useCart }      from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import Toast            from "../components/Toast";
-
+import { getProductRating, getReviews } from "../utils/reviewsStorage";
 
 function StarRating({ rating, size = 19 }) {
   return (
@@ -37,10 +36,11 @@ function Accordion({ title, children }) {
 function ProductPage() {
   const { id } = useParams();
   const [activeImg, setActiveImg] = useState(0);
+  const [toast, setToast]         = useState({ visible: false, message: "" });
+  const [userReviews, setUserReviews] = useState([]);
 
-  const { addToCart }                      = useCart();
-  const { toggleFavorite, isFavorite }     = useFavorites();
-  const [toast, setToast]                  = useState({ visible: false, message: "" });
+  const { addToCart }                  = useCart();
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   const showToast = useCallback((message) => {
     setToast({ visible: true, message });
@@ -50,10 +50,14 @@ function ProductPage() {
     setToast((t) => ({ ...t, visible: false }));
   }, []);
 
-  // reset przy zmianie produktu + scroll na górę
   useEffect(() => {
     setActiveImg(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [id]);
+
+  // załadowanie opinii użytkowników przy zmianie produktu
+  useEffect(() => {
+    setUserReviews(getReviews(Number(id)));
   }, [id]);
 
   const product = products.find((p) => p.id === Number(id));
@@ -67,9 +71,19 @@ function ProductPage() {
     );
   }
 
+  // obliczenie rating uwzględniając opinie użytkowników
+  const { rating, count } = getProductRating(
+    product.id,
+    product.rating,
+    product.reviewCount
+  );
+
+  // połączenie opinii mockowe z opiniami użytkowników
+  const allReviews = [...reviews, ...userReviews];
+
   const related = products
     .filter((p) => p.category === product.category && p.id !== product.id)
-    .sort(() => Math.random() - 0.5)  // losowa kolejność
+    .sort(() => Math.random() - 0.5)
     .slice(0, 4);
 
   const categoryLabel = product.category === "pielegnacja" ? "Pielęgnacja" : "Makijaż";
@@ -86,7 +100,6 @@ function ProductPage() {
 
       {/* Hero */}
       <section className="pdp__hero">
-        {/* Galeria */}
         <div className="pdp__gallery">
           <div className="pdp__gallery-main">
             <img
@@ -110,7 +123,6 @@ function ProductPage() {
           )}
         </div>
 
-        {/* Info */}
         <div className="pdp__info">
           {product.badge && (
             <span className={`pdp__badge pdp__badge--${product.badge === "BESTSELLER" ? "bestseller" : "promo"}`}>
@@ -121,9 +133,9 @@ function ProductPage() {
           <h1 className="pdp__name">{product.name}</h1>
 
           <div className="pdp__rating-row">
-            <StarRating rating={product.rating} />
+            <StarRating rating={rating} />
             <span className="pdp__rating-text">
-              ({product.rating} / {product.reviewCount} opinii)
+              ({rating} / {count} opinii)
             </span>
           </div>
 
@@ -152,7 +164,7 @@ function ProductPage() {
           <div className="pdp__actions">
             <button
               className="pdp__btn-cart"
-              onClick={() => { const ok = addToCart(product); if (ok) showToast("Dodano do koszyka!"); }}
+              onClick={() => { addToCart(product); showToast("Dodano do koszyka!"); }}
             >
               DODAJ DO KOSZYKA
             </button>
@@ -191,15 +203,15 @@ function ProductPage() {
           <div>
             <h2 className="pdp__reviews-title">Opinie klientek</h2>
             <div className="pdp__reviews-summary">
-              <span className="pdp__reviews-avg">{product.rating}</span>
-              <StarRating rating={product.rating} />
+              <span className="pdp__reviews-avg">{rating}</span>
+              <StarRating rating={rating} />
             </div>
           </div>
         </div>
 
         <div className="pdp__reviews-grid">
-          {reviews.map((review) => (
-            <div key={review.id} className="pdp__review-card">
+          {allReviews.map((review, i) => (
+            <div key={review.id || i} className="pdp__review-card">
               <div className="pdp__review-top">
                 <div>
                   <p className="pdp__review-author">{review.author}</p>
@@ -235,6 +247,7 @@ function ProductPage() {
           </div>
         </section>
       )}
+
       <Toast message={toast.message} visible={toast.visible} onHide={hideToast} />
     </div>
   );

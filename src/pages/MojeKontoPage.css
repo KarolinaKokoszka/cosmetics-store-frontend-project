@@ -331,3 +331,14 @@
     grid-column: 2;
   }
 }
+
+.konto__review-btn--done {
+  color: #2c7a4b;
+  border-color: #a3d9b8;
+  cursor: default;
+  opacity: 0.8;
+}
+
+.konto__review-btn:disabled {
+  cursor: default;
+}
