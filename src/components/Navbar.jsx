@@ -23,10 +23,10 @@ const PIELEGNACJA_CEL = [
 ];
 
 const PIELEGNACJA_RUTYNA = [
-  { label: "Oczyszczanie", path: "/pielegnacja?sub=oczyszczanie", icon: "/images/nav/piel-oczyszczanie.jpg" },
-  { label: "Tonizacja",    path: "/pielegnacja?sub=tonizacja",    icon: "/images/nav/piel-tonizacja.jpg"    },
-  { label: "Krem",         path: "/pielegnacja?sub=krem",         icon: "/images/nav/piel-krem.jpg"         },
-  { label: "Serum",        path: "/pielegnacja?sub=serum",        icon: "/images/nav/piel-serum.jpg"        },
+  { label: "Oczyszczanie", path: "/pielegnacja?rutyna=oczyszczanie", icon: "/images/nav/piel-oczyszczanie.jpg" },
+  { label: "Tonizacja",    path: "/pielegnacja?rutyna=tonizacja",    icon: "/images/nav/piel-tonizacja.jpg"    },
+  { label: "Krem",         path: "/pielegnacja?rutyna=krem",         icon: "/images/nav/piel-krem.jpg"         },
+  { label: "Serum",        path: "/pielegnacja?rutyna=serum",        icon: "/images/nav/piel-serum.jpg"        },
 ];
 
 const NAV_LINKS = [
@@ -66,10 +66,12 @@ function Navbar() {
     }
   }, [location]);
 
+
   useEffect(() => {
     setOpenMenu(null);
     setMobileOpen(false);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
+
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -249,12 +251,15 @@ function Navbar() {
 
         {/* HAMBURGER — mobile */}
         <div className="navbar__mobile-actions">
-          <Link to="/koszyk" className="navbar__icon-btn" aria-label="Koszyk">
+          <Link to="/koszyk" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Koszyk">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
+            {totalItems > 0 && (
+              <span className="navbar__cart-badge">{totalItems}</span>
+            )}
           </Link>
           <button
             className={`navbar__hamburger${mobileOpen ? " navbar__hamburger--open" : ""}`}

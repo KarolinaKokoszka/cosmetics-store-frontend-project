@@ -12,8 +12,15 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
   // odczytaj z URL czy to sub czy rutyna
   const urlSub = searchParams.get("sub") || "wszystko";
   const urlRutyna = searchParams.get("rutyna") || "wszystko";
-  const subValues = subcategories.map((s) => s.value);
-  const rutynaValues = rutyny.map((r) => r.value);
+  const subValues = useMemo(
+    () => subcategories.map((s) => s.value),
+    [subcategories]
+  );
+
+  const rutynaValues = useMemo(
+    () => rutyny.map((r) => r.value),
+    [rutyny]
+  );
 
   const initSub    = subValues.includes(urlSub)    ? urlSub    : "wszystko";
   const initRutyna = rutynaValues.includes(urlRutyna) ? urlRutyna    : "wszystko";
@@ -34,7 +41,8 @@ function ProductListPage({ category, title, description, subcategories, rutyny =
 
   const [currentPage, setCurrentPage] = useState(1);
 
-   //reakcja na zmianę URL
+
+  //reakcja na zmianę URL
   useEffect(() => {
     const newSub    = subValues.includes(urlSub)       ? urlSub    : null;
     const newRutyna = rutynaValues.includes(urlRutyna) ? urlRutyna : null;
