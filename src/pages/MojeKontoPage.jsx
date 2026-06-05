@@ -9,9 +9,10 @@ import {
 import { auth } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import products from "../data/products";
+import ReviewModal from "../components/ReviewModal";
 import "./MojeKontoPage.css";
+import { hasReviewed, markAsReviewed } from "../utils/reviewsStorage";
 
-// Przykładowa historia zamówień (statyczna)
 const mockOrders = [
   {
     id: "123456789",
@@ -39,12 +40,14 @@ function MojeKontoPage() {
   const [email, setEmail]         = useState("");
   const [phone, setPhone]         = useState("");
   const [profileSaved, setProfileSaved] = useState(false);
-
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword]         = useState("");
   const [passwordMsg, setPasswordMsg]         = useState("");
-
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+
+  // ← NOWE: stan modala opinii
+  const [reviewModal, setReviewModal] = useState(null); // { product, orderId }
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,49 +93,31 @@ function MojeKontoPage() {
     navigate("/");
   }
 
-  if (user === undefined) return null;
+  if (user === undefined || user === null) return null;
 
   return (
     <div className="konto">
       <div className="konto__inner">
 
-        {/* ── GÓRNY PANEL ── */}
         <div className="konto__top">
-
-          {/* Dane profilowe */}
           <div className="konto__box">
             <h2 className="konto__box-title">Moje konto</h2>
             <form onSubmit={handleProfileSave}>
               <p className="konto__section-label">Dane profilowe</p>
-
               <div className="konto__row">
                 <div className="konto__field">
                   <label className="konto__label">Imię</label>
-                  <input
-                    className="konto__input"
-                    value={firstName}
-                    disabled
-                  />
+                  <input className="konto__input" value={firstName} disabled />
                 </div>
                 <div className="konto__field">
                   <label className="konto__label">Nazwisko</label>
-                  <input
-                    className="konto__input"
-                    value={lastName}
-                    disabled
-                  />
+                  <input className="konto__input" value={lastName} disabled />
                 </div>
               </div>
-
               <div className="konto__field">
                 <label className="konto__label">Adres E-mail</label>
-                <input
-                  className="konto__input"
-                  value={email}
-                  disabled
-                />
+                <input className="konto__input" value={email} disabled />
               </div>
-
               <div className="konto__field">
                 <label className="konto__label">Numer telefonu</label>
                 <input
@@ -142,42 +127,28 @@ function MojeKontoPage() {
                   placeholder="+48 000 000 000"
                 />
               </div>
-
               <button type="submit" className="konto__btn konto__btn--primary">
                 {profileSaved ? "Zapisano!" : "Zapisz zmiany"}
               </button>
             </form>
-
             <button className="konto__logout" onClick={handleLogout}>
               Wyloguj się
             </button>
           </div>
 
-          {/* Zmiana hasła + usuń konto */}
           <div className="konto__side">
-
             <div className="konto__box">
               <h2 className="konto__box-title">Zmiana hasła</h2>
               <form onSubmit={handlePasswordChange}>
                 <div className="konto__field">
                   <label className="konto__label">Aktualne hasło</label>
-                  <input
-                    type="password"
-                    className="konto__input"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    required
-                  />
+                  <input type="password" className="konto__input" value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)} required />
                 </div>
                 <div className="konto__field">
                   <label className="konto__label">Nowe hasło</label>
-                  <input
-                    type="password"
-                    className="konto__input"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                  />
+                  <input type="password" className="konto__input" value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)} required />
                 </div>
                 {passwordMsg && <p className="konto__msg">{passwordMsg}</p>}
                 <button type="submit" className="konto__btn konto__btn--outline">
@@ -195,12 +166,8 @@ function MojeKontoPage() {
                 <div className="konto__delete-confirm">
                   <p className="konto__danger-text">Czy na pewno chcesz usunąć konto?</p>
                   <div className="konto__delete-btns">
-                    <button className="konto__btn konto__btn--danger" onClick={handleDelete}>
-                      Tak, usuń
-                    </button>
-                    <button className="konto__btn konto__btn--outline" onClick={() => setDeleteConfirm(false)}>
-                      Anuluj
-                    </button>
+                    <button className="konto__btn konto__btn--danger" onClick={handleDelete}>Tak, usuń</button>
+                    <button className="konto__btn konto__btn--outline" onClick={() => setDeleteConfirm(false)}>Anuluj</button>
                   </div>
                 </div>
               ) : (
@@ -209,11 +176,10 @@ function MojeKontoPage() {
                 </button>
               )}
             </div>
-
           </div>
         </div>
 
-        {/* ── HISTORIA ZAMÓWIEŃ ── */}
+        {/* HISTORIA ZAMÓWIEŃ */}
         <div className="konto__box konto__orders">
           <h2 className="konto__box-title">Historia zamówień</h2>
 
@@ -226,6 +192,8 @@ function MojeKontoPage() {
 
               {order.items.map((item, i) => {
                 const product = products.find((p) => p.id === item.productId);
+                const alreadyReviewed = hasReviewed(order.id, item.productId, user.uid);
+
                 return (
                   <div key={i} className="konto__order-item">
                     <div className="konto__order-img-wrap">
@@ -235,7 +203,14 @@ function MojeKontoPage() {
                     </div>
                     <span className="konto__order-name">{product?.name || "Produkt"}</span>
                     <span className="konto__order-price">{item.price.toFixed(2)} PLN</span>
-                    <button className="konto__review-btn">DODAJ OPINIĘ</button>
+
+                    <button
+                      className={`konto__review-btn ${alreadyReviewed ? "konto__review-btn--done" : ""}`}
+                      onClick={() => !alreadyReviewed && product && setReviewModal({ product, orderId: order.id })}
+                      disabled={alreadyReviewed}
+                    >
+                      {alreadyReviewed ? "OPINIA DODANA ✓" : "DODAJ OPINIĘ"}
+                    </button>
                   </div>
                 );
               })}
@@ -244,6 +219,19 @@ function MojeKontoPage() {
         </div>
 
       </div>
+
+      {/* ← MODAL OPINII */}
+      {reviewModal && (
+        <ReviewModal
+          product={reviewModal.product}
+          onClose={() => setReviewModal(null)}
+          onSaved={() => {
+            markAsReviewed(reviewModal.orderId, reviewModal.product.id, user.uid);
+            setReviewModal(null);
+          }}
+          authorName={`${firstName} ${lastName.charAt(0)}.`}
+        />
+      )}
     </div>
   );
 }
