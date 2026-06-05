@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  updateProfile,
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
@@ -58,9 +57,6 @@ function MojeKontoPage() {
 
   async function handleProfileSave(e) {
     e.preventDefault();
-    await updateProfile(auth.currentUser, {
-      displayName: `${firstName} ${lastName}`.trim(),
-    });
     setProfileSaved(true);
     setTimeout(() => setProfileSaved(false), 3000);
   }
@@ -115,7 +111,7 @@ function MojeKontoPage() {
                   <input
                     className="konto__input"
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    disabled
                   />
                 </div>
                 <div className="konto__field">
@@ -123,7 +119,7 @@ function MojeKontoPage() {
                   <input
                     className="konto__input"
                     value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    disabled
                   />
                 </div>
               </div>
@@ -143,7 +139,7 @@ function MojeKontoPage() {
                   className="konto__input"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+48 --- --- ---"
+                  placeholder="+48 000 000 000"
                 />
               </div>
 
