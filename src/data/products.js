@@ -488,7 +488,7 @@ const products = [
   {
     id: 27,
     name: "Cloud Cleanser",
-    rutyna: ["oczyszcanie"],
+    rutyna: ["oczyszczanie"],
     shortDesc: "Pianka oczyszczająca do twarzy",
     category: "pielegnacja",
     subcategory: "twarz",
@@ -552,7 +552,7 @@ const products = [
     subcategory: "twarz",
     price: 69,
     oldPrice: null,
-    badge: "NEW",
+    badge: "BESTSELLER",
     rating: 4.8,
     reviewCount: 74,
     description: "Bogaty tonik-esencja intensywnie nawilżający skórę już na pierwszym etapie pielęgnacji. Wzmacnia barierę ochronną skóry i pozostawia ją miękką, jędrną oraz pełną blasku.",
