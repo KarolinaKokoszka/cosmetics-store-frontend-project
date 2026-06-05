@@ -24,10 +24,10 @@ const PIELEGNACJA_CEL = [
 ];
 
 const PIELEGNACJA_RUTYNA = [
-  { label: "Oczyszczanie", path: "/pielegnacja?sub=oczyszczanie", icon: "/images/nav/piel-oczyszczanie.jpg" },
-  { label: "Tonizacja",    path: "/pielegnacja?sub=tonizacja",    icon: "/images/nav/piel-tonizacja.jpg"    },
-  { label: "Krem",         path: "/pielegnacja?sub=krem",         icon: "/images/nav/piel-krem.jpg"         },
-  { label: "Serum",        path: "/pielegnacja?sub=serum",        icon: "/images/nav/piel-serum.jpg"        },
+  { label: "Oczyszczanie", path: "/pielegnacja?rutyna=oczyszczanie", icon: "/images/nav/piel-oczyszczanie.jpg" },
+  { label: "Tonizacja",    path: "/pielegnacja?rutyna=tonizacja",    icon: "/images/nav/piel-tonizacja.jpg"    },
+  { label: "Krem",         path: "/pielegnacja?rutyna=krem",         icon: "/images/nav/piel-krem.jpg"         },
+  { label: "Serum",        path: "/pielegnacja?rutyna=serum",        icon: "/images/nav/piel-serum.jpg"        },
 ];
 
 const NAV_LINKS = [
@@ -70,10 +70,12 @@ function Navbar() {
     }
   }, [location]);
 
+
   useEffect(() => {
     setOpenMenu(null);
     setMobileOpen(false);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
+
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -288,11 +290,8 @@ function Navbar() {
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
-
             {totalItems > 0 && (
-              <span className="navbar__cart-badge">
-                {totalItems}
-              </span>
+              <span className="navbar__cart-badge">{totalItems}</span>
             )}
           </Link>
 
