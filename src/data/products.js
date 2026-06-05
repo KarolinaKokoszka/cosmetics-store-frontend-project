@@ -376,6 +376,7 @@ const products = [
   {
     id: 21,
     name: "Silk Hair Conditioner",
+    rutyna: [],
     shortDesc: "Odżywka do włosów",
     category: "pielegnacja",
     subcategory: "wlosy",
@@ -393,6 +394,7 @@ const products = [
   {
     id: 22,
     name: "Golden Glow Hair Elixir",
+    rutyna: [],
     shortDesc: "Olejek do włosów",
     category: "pielegnacja",
     subcategory: "wlosy",
@@ -410,6 +412,7 @@ const products = [
   {
     id: 23,
     name: "Repair Hair Mask",
+    rutyna: [],
     shortDesc: "Maska regenerująca do włosów",
     category: "pielegnacja",
     subcategory: "wlosy",
@@ -429,6 +432,7 @@ const products = [
   {
     id: 24,
     name: "Velvet Body Elixir",
+    rutyna: [],
     shortDesc: "Olejek do ciała",
     category: "pielegnacja",
     subcategory: "cialo",
@@ -446,6 +450,7 @@ const products = [
   {
     id: 25,
     name: "Lip Sleeping Mask",
+    rutyna: [],
     shortDesc: "Maska na noc na usta",
     category: "pielegnacja",
     subcategory: "twarz",
@@ -463,6 +468,7 @@ const products = [
   {
     id: 26,
     name: "Glow Body Scrub",
+    rutyna: ["oczyszczanie"],
     shortDesc: "Peeling do ciała",
     category: "pielegnacja",
     subcategory: "cialo",
@@ -476,7 +482,86 @@ const products = [
     ingredients: ["Cukier trzcinowy", "Olej arganowy", "Ekstrakt z kokosa", "Olej różany"],
     inci: "Sucrose, Argania Spinosa Oil, Cocos Nucifera Oil, Rosa Damascena Flower Oil, Tocopheryl Acetate",
     images: ["/images/bodycare/scrub-1.jpg", "/images/bodycare/scrub-2.jpg"]
+  },
+
+  //--------------------- OCZYSZCZANIE --------------
+  {
+    id: 27,
+    name: "Cloud Cleanser",
+    rutyna: ["oczyszcanie"],
+    shortDesc: "Pianka oczyszczająca do twarzy",
+    category: "pielegnacja",
+    subcategory: "twarz",
+    price: 49,
+    oldPrice: null,
+    badge: "BESTSELLER",
+    rating: 4.8,
+    reviewCount: 187,
+    description: "Lekka pianka oczyszczająca o kremowej konsystencji. Skutecznie usuwa makijaż, nadmiar sebum i zanieczyszczenia, nie naruszając bariery hydrolipidowej skóry. Pozostawia cerę świeżą, miękką i komfortowo nawilżoną.",
+    usage: "Nanieś 1-2 pompki produktu na wilgotną skórę twarzy. Masuj przez około minutę, następnie spłucz letnią wodą.",
+    ingredients: ["Pantenol", "Aloes", "Betaina", "Gliceryna"],
+    inci: "Aqua, Cocamidopropyl Betaine, Glycerin, Aloe Barbadensis Leaf Juice, Panthenol, Betaine",
+    images: ["/images/skincare/cloud-cleanser-1.jpg", "/images/skincare/cloud-cleanser-2.jpg"]
+  },
+
+  {
+    id: 28,
+    name: "Pure Melt Balm",
+    rutyna: ["oczyszczanie"],
+    shortDesc: "Balsam do demakijażu",
+    category: "pielegnacja",
+    subcategory: "twarz",
+    price: 69,
+    oldPrice: null,
+    badge: null,
+    rating: 4.7,
+    reviewCount: 143,
+    description: "Odżywczy balsam do demakijażu, który pod wpływem ciepła skóry zmienia się w jedwabisty olejek. Skutecznie rozpuszcza makijaż, SPF i zanieczyszczenia, pozostawiając skórę gładką i miękką.",
+    usage: "Wmasuj niewielką ilość produktu w suchą skórę twarzy. Dodaj odrobinę wody, aby stworzyć emulsję, a następnie dokładnie spłucz.",
+    ingredients: ["Masło shea", "Olej migdałowy", "Witamina E", "Olej jojoba"],
+    inci: "Butyrospermum Parkii Butter, Prunus Amygdalus Dulcis Oil, Simmondsia Chinensis Seed Oil, Tocopherol",
+    images: ["/images/skincare/melt-balm-1.jpg", "/images/skincare/melt-balm-2.jpg"]
+  },
+
+  {
+    id: 29,
+    name: "Purity Gel Wash",
+    rutyna: ["oczyszczanie"],
+    shortDesc: "Żel oczyszczający do twarzy",
+    category: "pielegnacja",
+    subcategory: "twarz",
+    price: 55,
+    oldPrice: null,
+    badge: null,
+    rating: 4.5,
+    reviewCount: 96,
+    description: "Delikatny żel oczyszczający przeznaczony do codziennego stosowania. Pomaga usunąć zanieczyszczenia i nadmiar sebum, jednocześnie zachowując naturalną równowagę skóry.",
+    usage: "Nałóż na wilgotną skórę twarzy, masuj przez 30-60 sekund, następnie dokładnie spłucz wodą.",
+    ingredients: ["Niacynamid", "Cynk", "Pantenol", "Gliceryna"],
+    inci: "Aqua, Glycerin, Niacinamide, Zinc PCA, Panthenol, Sodium Cocoyl Glycinate",
+    images: ["/images/skincare/purity-gel-1.jpg", "/images/skincare/purity-gel-2.jpg"]
+  },
+
+  //---------------- TONIZACJA -------------------------------------
+  {
+    id: 30,
+    name: "Hydra Essence Toner",
+    rutyna: ["tonizacja"],
+    shortDesc: "Nawilżający tonik-esencja",
+    category: "pielegnacja",
+    subcategory: "twarz",
+    price: 69,
+    oldPrice: null,
+    badge: "NEW",
+    rating: 4.8,
+    reviewCount: 74,
+    description: "Bogaty tonik-esencja intensywnie nawilżający skórę już na pierwszym etapie pielęgnacji. Wzmacnia barierę ochronną skóry i pozostawia ją miękką, jędrną oraz pełną blasku.",
+    usage: "Nanieś kilka kropli na dłonie i delikatnie wklep w oczyszczoną skórę twarzy oraz szyi.",
+    ingredients: ["Kwas hialuronowy", "Trehaloza", "Pantenol", "Ceramidy"],
+    inci: "Aqua, Sodium Hyaluronate, Trehalose, Panthenol, Ceramide NP",
+    images: ["/images/skincare/hydra-toner-1.jpg", "/images/skincare/hydra-toner-2.jpg"]
   }
 ];
 
 export default products;
+
