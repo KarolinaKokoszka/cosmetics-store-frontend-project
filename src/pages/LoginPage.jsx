@@ -17,7 +17,7 @@ function LoginPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (user) navigate("/moje-konto");
+    if (user) navigate("/");
   }, [user, navigate]);
 
   async function handleSubmit(e) {
@@ -26,7 +26,7 @@ function LoginPage() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/moje-konto");
+      navigate("/");
     } catch (err) {
       setError(mapError(err.code));
     } finally {

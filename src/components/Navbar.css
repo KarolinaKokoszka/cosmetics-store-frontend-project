@@ -514,3 +514,97 @@
 .navbar__mobile-chevron--open {
   transform: rotate(180deg);
 }
+
+
+.navbar__account {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  padding: 10px 0; /* zwiększa hover area */
+}
+
+.navbar__account-dropdown {
+  position: absolute;
+
+  top: calc(100% + 8px); /* było 18px */
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  min-width: 180px; /* było 230px */
+
+  background: #fff;
+
+  border: 1px solid #ececec;
+  border-radius: 16px;
+
+  padding: 8px;
+
+  z-index: 300;
+
+  box-shadow:
+    0 10px 30px rgba(15,23,42,.14),
+    0 4px 12px rgba(15,23,42,.08);
+
+  animation: accountFade .18s ease;
+}
+
+/* wypełnia lukę między tekstem a menu */
+.navbar__account-dropdown::after {
+  content: "";
+
+  position: absolute;
+
+  top: -12px;
+  left: 0;
+  right: 0;
+
+  height: 12px;
+}
+
+.navbar__account-dropdown::before {
+  content: "";
+
+  position: absolute;
+
+  top: -6px;
+  left: 50%;
+
+  width: 12px;
+  height: 12px;
+
+  transform: translateX(-50%) rotate(45deg);
+
+  background: white;
+
+  border-left: 1px solid #ececec;
+  border-top: 1px solid #ececec;
+}
+
+.navbar__account-item {
+  width: 100%;
+
+  padding: 11px 14px;
+
+  border: none;
+  background: none;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+
+  color: #7B5CF0;
+
+  font-size: 0.95rem;
+
+  transition: background .2s;
+}
+
+.navbar__account-item:hover {
+  background: #f6f2ff;
+}

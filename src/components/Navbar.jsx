@@ -49,6 +49,7 @@ function Navbar() {
   const [openMenu, setOpenMenu]     = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const navigate   = useNavigate();
   const location   = useLocation();
   const closeTimer = useRef(null);
@@ -76,6 +77,10 @@ function Navbar() {
     setMobileOpen(false);
   }, [location.pathname, location.search]);
 
+
+  useEffect(() => {
+  setAccountMenuOpen(false);
+}, [user, location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -215,11 +220,52 @@ function Navbar() {
         {/* IKONY (desktop) */}
         <div className="navbar__actions">
           {user ? (
-            <>
-              <span className="navbar__text-link navbar__text-link--greeting">
-                Witaj, {user.displayName?.split(" ")[0] || "Konto"}
-              </span>
-              <Link to="/moje-konto" className="navbar__text-link navbar__text-link--register">
+              <>
+              <div
+                className="navbar__account"
+                onMouseEnter={() => {
+                  clearTimeout(closeTimer.current);
+                  setAccountMenuOpen(true);
+                }}
+                onMouseLeave={() => {
+                  closeTimer.current = setTimeout(() => {
+                    setAccountMenuOpen(false);
+                  }, 180);
+                }}
+              >
+                <span className="navbar__text-link navbar__text-link--greeting">
+                  Witaj, {user.displayName?.split(" ")[0] || "Konto"}
+                </span>
+
+                {user && accountMenuOpen && (
+                  <div className="navbar__account-dropdown">
+                    <button
+                      onClick={handleLogout}
+                      className="navbar__account-item"
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                      </svg>
+
+                      <span>Wyloguj się</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                to="/moje-konto"
+                className="navbar__text-link navbar__text-link--register"
+              >
                 MOJE KONTO
               </Link>
             </>
