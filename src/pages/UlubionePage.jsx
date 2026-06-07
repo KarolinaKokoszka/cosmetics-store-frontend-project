@@ -51,7 +51,12 @@ function UlubiionePage() {
                 <div className="fav__info-bottom">
                   <button
                     className="fav__add-btn"
-                    onClick={() => { addToCart(product); showToast("Dodano do koszyka!"); }}
+                    onClick={() => {
+                      const added = addToCart(product);
+                      if (added) {
+                        showToast("Dodano do koszyka!");
+                      }
+                    }}
                   >
                     DODAJ DO KOSZYKA
                   </button>

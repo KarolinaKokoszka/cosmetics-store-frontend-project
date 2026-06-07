@@ -164,7 +164,12 @@ function ProductPage() {
           <div className="pdp__actions">
             <button
               className="pdp__btn-cart"
-              onClick={() => { addToCart(product); showToast("Dodano do koszyka!"); }}
+              onClick={() => {
+                const added = addToCart(product);
+                if (added) {
+                  showToast("Dodano do koszyka!");
+                }
+              }}
             >
               DODAJ DO KOSZYKA
             </button>
