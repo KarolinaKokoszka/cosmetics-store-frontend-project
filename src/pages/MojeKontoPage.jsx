@@ -51,12 +51,11 @@ function MojeKontoPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!user) { navigate("/login"); return; }
     const parts = (user.displayName || "").split(" ");
     setFirstName(parts[0] || "");
     setLastName(parts.slice(1).join(" ") || "");
     setEmail(user.email || "");
-  }, [user, navigate]);
+  }, [user]);
 
   async function handleProfileSave(e) {
     e.preventDefault();
