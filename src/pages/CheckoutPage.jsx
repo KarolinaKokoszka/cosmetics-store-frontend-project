@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { saveOrder } from "../utils/ordersStorage";
+import { useAuth } from "../context/AuthContext";
 import "./CheckoutPage.css";
 
 const PAYMENT_METHODS = [
@@ -10,13 +12,21 @@ const PAYMENT_METHODS = [
 ];
 
 function CheckoutPage() {
-  const { total, clearCart } = useCart();
+  const { cartItems, subtotal, shipping, total, clearCart } = useCart();
+  const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [payment, setPayment] = useState("card");
   const [form, setForm] = useState({
     firstName: "", lastName: "", address: "",
     postal: "", city: "", phone: ""
   });
+
+   useEffect(() => {
+    if (!location.state?.fromCart) {
+      navigate("/koszyk", { replace: true });
+    }
+  }, [location, navigate]);
 
   function handleChange(e) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -25,8 +35,14 @@ function CheckoutPage() {
   function handleSubmit() {
     const filled = Object.values(form).every((v) => v.trim() !== "");
     if (!filled) { alert("Uzupełnij wszystkie pola."); return; }
+
+    const order = { items: cartItems, subtotal, shipping, total };
+
+    // zapisz do localStorage jeśli zalogowany
+    if (user) saveOrder(user.uid, order);
+
+    navigate("/zamowienie-zlozone", { state: { order } });
     clearCart();
-    navigate("/zamowienie-zlozone");
   }
 
   return (
