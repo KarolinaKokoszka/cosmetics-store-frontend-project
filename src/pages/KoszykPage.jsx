@@ -129,7 +129,7 @@ function KoszykPage() {
 
             <button
               className="cart__buy-btn"
-              onClick={() => navigate("/checkout")}
+              onClick={() => navigate("/checkout", { state: { fromCart: true } })}
             >
               KUP TERAZ →
             </button>

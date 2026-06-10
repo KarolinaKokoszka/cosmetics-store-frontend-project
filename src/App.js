@@ -24,6 +24,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 
 
 import { useLocation } from "react-router-dom";
@@ -56,6 +57,8 @@ function AppRoutes() {
       <Route path="/produkt/:id" element={<MainLayout><ProductPage /></MainLayout>} />
       <Route path="/checkout" element={<ProtectedRoute><MainLayout><CheckoutPage /></MainLayout></ProtectedRoute>} />
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="/zamowienie-zlozone" element={<ProtectedRoute><MainLayout><OrderConfirmationPage /></MainLayout></ProtectedRoute>} />
+
     </Routes>
   );
 }

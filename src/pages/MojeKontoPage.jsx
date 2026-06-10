@@ -12,6 +12,7 @@ import products from "../data/products";
 import ReviewModal from "../components/ReviewModal";
 import "./MojeKontoPage.css";
 import { hasReviewed, markAsReviewed } from "../utils/reviewsStorage";
+import { getOrders } from "../utils/ordersStorage";
 
 const mockOrders = [
   {
@@ -44,6 +45,7 @@ function MojeKontoPage() {
   const [newPassword, setNewPassword]         = useState("");
   const [passwordMsg, setPasswordMsg]         = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [realOrders, setRealOrders] = useState([]);
 
   // ← NOWE: stan modala opinii
   const [reviewModal, setReviewModal] = useState(null); // { product, orderId }
@@ -55,6 +57,7 @@ function MojeKontoPage() {
     setFirstName(parts[0] || "");
     setLastName(parts.slice(1).join(" ") || "");
     setEmail(user.email || "");
+    setRealOrders(getOrders(user.uid));
   }, [user]);
 
   async function handleProfileSave(e) {
@@ -93,6 +96,7 @@ function MojeKontoPage() {
   }
 
   if (user === undefined || user === null) return null;
+  const allOrders = [...realOrders, ...mockOrders];
 
   return (
     <div className="konto">
@@ -182,7 +186,7 @@ function MojeKontoPage() {
         <div className="konto__box konto__orders">
           <h2 className="konto__box-title">Historia zamówień</h2>
 
-          {mockOrders.map((order) => (
+          {allOrders.map((order) => (
             <div key={order.id} className="konto__order">
               <div className="konto__order-header">
                 <span className="konto__order-num">ZAMÓWIENIE NR {order.id}</span>
@@ -190,8 +194,14 @@ function MojeKontoPage() {
               </div>
 
               {order.items.map((item, i) => {
-                const product = products.find((p) => p.id === item.productId);
-                const alreadyReviewed = hasReviewed(order.id, item.productId, user.uid);
+                // mock ma productId, prawdziwe zamówienie ma pełny obiekt produktu
+                const product = item.productId
+                  ? products.find((p) => p.id === item.productId)
+                  : item; //  cartItem już ma name, images, price
+
+                const productId = item.productId || item.id;
+                const price = item.price;
+                const alreadyReviewed = hasReviewed(order.id, productId, user.uid);
 
                 return (
                   <div key={i} className="konto__order-item">
@@ -201,7 +211,7 @@ function MojeKontoPage() {
                       )}
                     </div>
                     <span className="konto__order-name">{product?.name || "Produkt"}</span>
-                    <span className="konto__order-price">{item.price.toFixed(2)} PLN</span>
+                    <span className="konto__order-price">{price?.toFixed(2)} PLN</span>
 
                     <button
                       className={`konto__review-btn ${alreadyReviewed ? "konto__review-btn--done" : ""}`}
